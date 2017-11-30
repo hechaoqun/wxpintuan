@@ -1,0 +1,143 @@
+    <view class="body" hidden="{{notNetCon.error == 1 || notNetCon.error == 1 && notNetCon.show == 1}}">
+    <view class="div" ms-controller="root">
+            
+            <include src="common/express.wxml"/>
+
+
+            <view class="div nav_fixed">
+            <!--data-status="1" href="#" ms-class="nav_cur: all_status==3" ms-click=statusChange(3)-->
+                <view class="a fixed_nav_item {{all_status == 3 || all_status == undefined ? 'nav_cur' : ''}}" data-all_status="3" bindtap="statusChange">
+                    <view class="span nav_txt">全部订单</view>
+                </view>
+                <!--data-status="2" href="#" ms-class="nav_cur: all_status==0" ms-click=statusChange(0)-->
+                <view class="a fixed_nav_item {{all_status == 0 ? 'nav_cur' : ''}}" data-all_status="0" bindtap="statusChange">
+                    <view class="span nav_txt nav_payment">待付款
+                        <view class="b nav_payment_num" style="display:none;"></view>
+                    </view>
+                </view>
+                <!--data-status="3" href="#" ms-class="nav_cur: all_status==1" ms-click=statusChange(1)-->
+                <view class="a fixed_nav_item {{all_status == 1 ? 'nav_cur' : ''}}" data-all_status="1" bindtap="statusChange">
+                    <view class="span nav_txt nav_receiving">待收货
+                        <view class="b nav_receiving_num" style="display:none;"></view>
+                    </view>
+                </view>
+            </view>
+            
+            <scroll-view  style="height: {{windowHeight}}px; width: {{windowWidth}}px;" scroll-y="true" bindscrolltoupper="pullUpLoad" bindscrolltolower="pullDown" hidden="{{!page.load && !page.operate}}">
+            <!--&& shippingBanner.open == '1'-->
+            <view class="div" id="dealliststatus1" ms-class="scroll_coup:confirm_code">
+                <view class="div order" ms-repeat-order="orders" wx:key="" wx:for-item="order" wx:for="{{orders}}" >
+                    <view class="div order_hd">
+                        {{order.order_time}}
+                    </view>
+                    <view class="div order_bd ">
+                        <view class="div order_glist">
+                            <navigator url="./order?id={{order.order_id}}" >
+                            <view class='a' ms-href="order.html?id={{order.order_id}}">
+                                <view class="div order_goods" data-url="">
+                                    <!-- ms-class-1="order_li: order.order_goods[0].nbstore_only == '1'"-->
+                                    <view class="div order_goods_img ">
+                                        <!--ms-src="{{order.order_goods[0].thumb_url}}"-->
+                                        <!-- <navigator  url="goods?goods_id={{order.order_goods.goods_id}}"></navigator> -->
+                                        <image class="img" alt="" src="{{order.order_goods.image_url}}"></image>
+                                    </view>
+
+                                    <view class="div order_goods_info">
+                                        <view class="div order_goods_name">{{order.order_goods.goods_name}}</view>
+                                        <view class="div order_goods_attr">
+                                            <view class="div order_goods_attr_item">
+                                                <view class="div order_goods_price">
+                                                    <view class="i">￥</view>{{order.order_goods.market_price}}
+                                                    <view class="i">/件</view>
+                                                </view>数量：1
+                                            </view>
+                                        </view>
+                                    </view>
+                                    <!--<view class="div" ms-if = "order.pay_status == 2 && order.order_status == 1">
+                                        <view ms-if = "order.lucky_status && order.lucky_status != '' && order.lucky_status != '0'" class="p prize">{{getPrize(order.lucky_status)}}</view>
+                                    </view>-->
+                                </view>
+                            </view>
+                            </navigator>
+                            <view class="div order_ft">
+                                <view class="div order_total">
+                                    <view class="span order_total_info">共1件商品 ，免运费</view>
+                                    <view class="span order_price">实付：
+                                        <view class="b"><view class="small">￥</view>{{order.order_amount}}</view>
+                                    </view>
+                                    <view class="span coupon_icon" wx:if="order.coupons.length>0"></view>
+                                </view>
+                                <view class="div order_opt">
+                                    <view class="div " wx:if = "order.pay_status == 2 && order.order_status == 1">
+                                        <!--<view class="span order_status" wx:if = "order.lucky_status == '3' || order.lucky_status == '0' ">{{order.order_status_lang}}</view>-->
+                                    </view>
+                                    <view class="div" wx:if = "order.pay_status != 2 || order.order_status != 1">
+                                        <view class="span order_status">{{order.order_status_lang}}</view>
+                                    </view>
+                                    <view class="div order_btn" hidden="{{!(order.order_status==0)}}">
+                                        <view class="a order_btn_buy" wx:click="orderBuy(order)" bindtap="orderBuy" data-order_id="{{order.order_id}}">去支付</view>
+                                        <!--<input  class="input" ms-attr-value="{{order.order_id}}" name="order_id" type="hidden"/>-->
+                                        <view class="a" data-order_id="{{order.order_id}}" bindtap="orderCancel">取消订单</view>
+                                    </view>
+                                    <view class="div order_btn" hidden="{{!(order.order_status==10 || order.order_status==3)}}">
+                
+                                        <view class="a order_btn_receive" hidden="{{!(order.order_status==3)}}" data-order_id="{{order.order_id}}" bindtap ="orderReceive" ms-click="(order.order_id)">确认收货</view>
+                                        
+                                        <view class="a " hidden="{{!(order.order_status==10 || order.order_status==3)}}" data-order_id="{{order.order_id}}" bindtap ="expressShow">查看物流</view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+
+                <view class="div wrap_position" ms-class="pullUp_hide:pullUp_hide" ms-class="pullUp_show:pullUp_show">
+                    <view class="div posi_abso" ms-class="up:isloading" wx:if="{{is_over == 0 && pullDown == 1 && page.load == 1}}">
+                        <view class="div center " id="center_pullup">
+                            <view class="span">
+                            <image class="img_rotate" src="data:image/png;base64,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"/></view>
+                            <view class="span loading-text">正在加载中...</view>
+                        </view>
+                    </view>
+
+                    <!-- <view class="div posi_abso" ms-class="up:!isloading" wx:elif="{{orders.length == 0 && no_order == 1 && page.load ==1}}">
+                        <view class="div center " id="center_pullup">
+                            <view class="span orders_text" id="noOrders">你还没有任何相关订单哦</view>
+                        </view>
+                    </view> -->
+
+
+                    <view class="div no-orders-at-all" wx:elif="{{orders.length == 0 && no_order == 1 && page.load ==1}}">
+                        <view class="div head-block">
+                            <view class="div blank-icon"></view>
+                            <view class="hint">您还没有相关的订单</view>
+                            <view class="p recommend-hint">去看看大家都在买什么吧</view>
+                        </view>
+                    </view>
+
+                    <view class="div posi_abso" ms-class="up:!isloading" wx:elif="{{is_over == 1 && page.load ==1}}">
+                        <view class="div center " id="center_pullup">
+                            <view class="span orders_text" id="noOrders">{{pullload_text.no_orders}}</view>
+                        </view>
+                    </view>
+
+                </view>
+
+            </view>
+
+            </scroll-view>        
+
+            
+
+            <view onclick="common.showService()" class="i service explain_icon_right" style="display: block;">
+                <contact-button 
+                    type="default-light" 
+                     size="27" >
+                 </contact-button>  
+            </view>
+            
+        </view>
+        <view style="div height:58px;visibility:hidden "></view>
+</view>
+
+<include src="common/footer.wxml"/>

@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/vendor/datepicker/WdatePicker.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<style>
+	.ttr{background: #fff;}
+	.ttr .tdt{font-weight: bold;}
+</style>
+<body>
+		<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="2" class="table_title">
+				<span class="fl">订单信息</span>
+				<span class="fr">
+					<a href="{:U('Orders/index')}">订单列表</a>
+				</span>
+
+			</td>
+		</tr>
+		<tr class="tr ct">
+			<td colspan="2">
+				<if condition="$preOrder">
+				<a href="{:U('Orders/edit',array('id'=>$preOrder['order_id']))}">前一个订单</a>
+				</if>
+				<if condition="$nextOrder">
+				<a href="{:U('Orders/edit',array('id'=>$nextOrder['order_id']))}">后一个订单</a>
+				</if>
+				
+				<a href="#">打印订单</a>
+				
+			</td>
+		</tr>
+		<tr class="list_head ct">
+			<td colspan="2">基本信息</td>
+		</tr>
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				订单号：
+			</span>
+				{$info.order_sn}
+
+			</td>
+			<td>
+				<span class="tdt">
+					订单状态：
+				</span>
+				<switch name="info.order_status">
+					    <case value="0">待支付</case>
+					    <case value="1">已支付，未确认</case>
+					    <case value="2">已确认，待发货</case>
+					    <case value="3">配送中</case>
+					    <case value="4">已签收</case>
+					    <case value="5">交易已取消</case>
+					    <case value="6">未发货退款处理中</case>
+					    <case value="7">未发货退款成功</case>
+					    <case value="8">已发货退款处理中</case>
+					    <case value="9">已发货退款成功</case>
+					    
+					    <default />default
+				</switch>
+
+				<if condition="$info['order_status'] != 0 && $info['order_status'] != 5">
+					 （<eq name="info.group_buy" value="1">
+					 团购 
+					<if condition="$group['status'] == 0 ">进行中
+						<elseif condition="$group['status'] == 1"/><span style="color:green;">成功</span>
+					    <else /> <span style="color:red;">失败</span>
+					</if>
+
+					 <else/>个人</eq>）
+				</if>
+
+			</td>
+		</tr>
+
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				购买人：
+			</span>
+				{$memberInfo.nickname}
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				[
+				 <eq name="info.group_buy" value="1">
+					团购
+					<eq name="info.group_header" value="1">
+					（团长）
+					<eq name="info.group_order_id" value="0">
+					（未成团）<else/>
+					（已成团）</eq>
+					<else/>(参团)
+					</eq><else/>个人购买</eq>]
+
+				<a href="{:U('Member/edit',array('id'=>$memberInfo[member_id]))}">[显示购买人信息]</a>
+
+			</td>
+			<td>
+				<span class="tdt">
+					下单时间：
+				</span>
+				{$info.order_time|date='Y-m-d H:i:s',###}
+
+			</td>
+		</tr>
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				支付方式：
+			</span>
+				{$payinfo.pay_type}
+
+			</td>
+			<td>
+				<span class="tdt">
+					付款时间：
+				</span>
+				{$payinfo.pay_done_time|date='Y-m-d H:i:s',###}
+
+			</td>
+		</tr>
+
+
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				配送方式：
+			</span>
+				{$info.shipping_name|default=''}
+				
+				{$info.tracking_number|default=''}
+			</td>
+			<td>
+				<span class="tdt">
+					发货时间：
+				</span>
+
+				<if condition=" $info[shipping_time] gt 0">
+				{$info.shipping_time|date='Y-m-d H:i:s',###}
+				    <else /> 未发货
+				</if>
+				
+				
+
+			</td>
+		</tr>
+
+
+		<tr class="tr ct">
+			<td colspan="2">
+				
+				收货人信息
+			</td>
+		</tr>
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				收货人：
+			</span>
+				{$info.receive_name}
+
+			</td>
+			<td>
+				<span class="tdt">
+					电话：
+				</span>
+				{$info.mobile}
+
+			</td>
+		</tr>
+
+		<tr class="ttr ct">
+			<td colspan="2">
+			<span class="tdt">
+				收货地址：
+			</span>
+				{$info.shipping_address}
+
+			</td>
+			
+		</tr>
+
+
+
+
+	    
+		
+		</table>
+		<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+			<tr class="tr ct">
+				<td colspan="3">
+					
+					商品信息
+				</td>
+			</tr>
+			<tr class="ttr">
+				<td width="70"></td>
+				<td>
+					商品名称
+				</td>
+				<td width="70">
+					商品价格
+				</td>
+				
+			</tr>
+			<tr class="ttr">
+				<td>
+					<img src="{$info['order_goods']['image_url']}" alt="" width="76px;" height="76px;" />
+				</td>
+				<td>
+					<a href="">{$info['order_goods']['goods_name']}</a>
+				</td>
+				<td>
+					<if condition="$info['group_buy'] eq 1 ">
+						{$info['order_goods']['group_price']}元
+					    <else /> 
+					    {$info['order_goods']['alone_price']}元
+					 </if>
+					
+				</td>
+				
+			</tr>
+
+		</table>
+
+
+		<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+			<tr class="tr ct">
+				<td colspan="6">
+					
+					操作信息
+				</td>
+			</tr>
+
+			<tr class="tr ct">
+				<td colspan="6">
+					
+					操作备注：
+					<textarea name="" id="do_remark" id="" cols="90" rows="10"></textarea>
+				</td>
+			</tr>
+
+			<tr class="tr ct">
+				<td colspan="6">
+					
+					当前可执行操作：
+
+					<switch name="info.order_status">
+					    <case value="0">
+					    <a href="javascript:void(0)" onclick="concelOrder({$info.order_id})">取消订单</a>
+					    </case>
+					    <case value="1">
+					    	<a href="javascript:void(0)" onclick="confirmOrder({$info.order_id})">确认订单</a>
+					    	<a href="javascript:void(0)" onclick="sendOrder({$info.order_id})">发货</a>
+					    </case>
+					    <case value="2">
+					    	<a href="javascript:void(0)" onclick="sendOrder({$info.order_id})">发货</a>
+					    </case>
+					    
+				</switch>
+
+				<if condition="$info['order_status'] neq 0 && $info['order_status'] neq 5">
+					<a href="javascript:void(0)" onclick="refound({$info.order_id})">退款</a>
+				</if>
+					
+				</td>
+			</tr>
+			<tr class="ttr">
+				
+				<td>
+					操作者
+				</td>
+				<td>
+					操作时间
+				</td>
+				<td>
+					操作
+				</td>
+				<td>
+					备注
+				</td>
+				
+				
+			</tr>
+			<volist name="log" id="data">
+			<tr class="ttr">
+				
+				<td>
+					{$data.manage}
+				</td>
+				<td>
+					{$data.time|date='Y-m-d H:i:s',###}
+				</td>
+				<td>
+					{$data.do}
+				</td>
+				<td>
+					{$data.remark}
+				</td>
+				
+				
+			</tr>
+			</volist>
+
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+<script>
+	//取消订单
+	function concelOrder(id){
+		if(confirm('确定取消该订单？')){
+			$.ajax({
+				 type: "POST",
+				 url: "{:U('Admin/Orders/cancel')}",
+				 data: {order_id:id, remark:$("#do_remark").val()},
+				 dataType: "json",
+				 success:function(e){
+				 	if(e.result == 'ok'){
+				 		alert('订单取消成功');
+				 		location.reload();
+				 	}else{
+				 		alert('取消订单失败');
+				 	}
+				 }
+			})
+		}
+	}
+	//确认订单
+	function confirmOrder(id){
+		if(confirm('确认该订单？')){
+			$.ajax({
+				 type: "POST",
+				 url: "{:U('Admin/Orders/confirm')}",
+				 data: {order_id:id, remark:$("#do_remark").val()},
+				 dataType: "json",
+				 success:function(e){
+				 	if(e.result == 'ok'){
+				 		alert('确认订单成功');
+				 		location.reload();
+				 	}else{
+				 		alert('确认订单失败');
+				 	}
+				 }
+			})
+		}
+	}
+
+	//发货
+	function sendOrder(id){
+		window.top.art.dialog.open('{:U('Orders/delivery/')}'+'&order_id='+id,{id: 'delivery',title: '设置发货', width: 600, height: 500});
+	}
+
+	function refound(id){
+		window.top.art.dialog.open('{:U('Orders/refound/')}'+'&order_id='+id,{id: 'refound',title: '退款', width: 300, height: 200});
+	}
+</script>
+</body>
+	</html>

@@ -1,0 +1,58 @@
+<view class="section content express" style="height: 518px;" hidden="{{!page.load && !page.operate || notNetCon.error == 1 && notNetCon.show == 1 || notServerCon.error == 1}}">
+    <view class="div wrap">
+        <view class="div inactive prev" index="0"></view>
+        <view class="div active" index="1" data-fragment="!/awp/mtb/oper.htm?operId=0&orderId=3326368081504198&spm=a2141.7631731.0.i1" style="transform: translate3d(0px, 0px, 0px); backface-visibility: initial; transform-style: flat;">
+            <view class="div" id="J_oper_plugin">
+                <view class="div logis-order">订单商品</view>
+                
+                <navigator url="./order?id={{order.order_id}}">
+                    <view class="div mb-ollr">
+                        <view class="div ol-l">
+                            <view class="a fragment" data-fragment="!/awp/mtb/odetail.htm" data-orderid="3326368081504198" data-archive="0">
+                                <image class="img" src="{{order.order_goods.image_url}}"/>
+                            </view>
+                        </view>
+                        <view class="div ol-r">
+                            
+                                <view class="a fragment" data-fragment="!/awp/mtb/odetail.htm" data-orderid="3326368081504198" data-archive="0">
+                                    <view class="h3"><view class="span">{{order.order_goods.goods_name}}</view></view> 
+                                    <view class="p r-price"></view>
+                                    <view class="p d-total">共1件</view>
+                                </view>
+                        </view>
+                    </view>
+                </navigator> 
+                
+                <view class="div logis-info">
+                    <view class="p">物流公司 {{shipping.shipper}}</view>
+                    <view class="p">运单号码 {{shipping.tracking_number}}</view>
+                </view>
+                <view class="div logis-detail">
+                    <view class="ul">
+                        <view class="li" wx:for="{{shipping_info}}" wx:for-index='i'>
+                            <view class="p logis-detail-date">{{item.month_day}}</view>
+
+                            <block  wx:for="{{item.detail}}" wx:for-item="detail" wx:for-index='j'>
+
+                                <view class="div logis-detail-d {{i == 0 && j == 0 ? 'logis-detail-first' : ''}} ">
+                                    <view class="div logis-detail-content">
+                                        <view class="p logis-detail-content-time">{{detail.timer}}</view>
+                                        <view class="p logis-detail-content-detail">{{detail.remark}}</view>
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="div inactive next" index="2"></view>
+        <view class="div inactive" index="3"></view>
+        <view class="div inactive" index="4"></view>
+    </view>
+    <view class="div trans">
+        <view></view>
+    </view>
+</view>
+
+<include src="common/footer.wxml"/>

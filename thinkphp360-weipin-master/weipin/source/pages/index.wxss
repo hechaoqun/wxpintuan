@@ -1,0 +1,548 @@
+#main {
+    color: #666;
+    font-family: Helvetica,STHeiti STXihei,Microsoft JhengHei,Microsoft YaHei,Arial;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.p {display: inline}
+
+#main,.div.navbar,.header {
+    margin: auto;
+    max-width: 640px
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    min-height: 100%;
+    margin: 0 auto;
+    /*padding: 0 0 56px;*/
+    overflow-x: hidden;
+    background-color: #eceded
+}
+
+.index_loctaion {
+    position: fixed;
+    top: 0;
+    z-index: 10015;
+    height: 34px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.index_loctaion .location .i {
+    display: inline-block;
+    z-index: 10016;
+    float: left;
+    margin: 8px -10px 0 8px;
+    height: 25px;
+    width: 32px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAiCAYAAABMfblJAAAAAXNSR…a2divItoNUiBe/JhD5BvcwBM4mk8nzkUhE/ypYKP4/8x8fIvq5xVc61AAAAABJRU5ErkJggg==) no-repeat;
+    background-size: 15px 18px;
+}
+
+.index_loctaion .location .span {
+    display: inline-block;
+    z-index: 10016;
+    float: left;
+    height: 34px;
+    width: 32px;
+    line-height: 34px;
+    font-size:16px;
+    color:#fff;
+}
+
+.tuan {
+    min-height: 520px;
+}
+
+#channelSlider {
+    max-width: 640px;
+    position: fixed;
+    height: 46.4px;
+    top: 0px;
+    width: 100%;
+    z-index: 10015;
+    background-color: #fff;
+    overflow: hidden;
+    border-top: 1px solid #eceded;
+    border-bottom: 1px solid #eceded
+}
+
+#channelSlider .ch-left {
+    background-image: linear-gradient(270deg,hsla(0,0%,100%,0) 0,#fff);
+    width: 35.2rpx;
+    float: left
+}
+
+#channelSlider .ch-left,#channelSlider .ch-right {
+    z-index: 10015;
+    height: inherit;
+    overflow: hidden;
+    position: absolute
+}
+
+#channelSlider .ch-right {
+    background-image: linear-gradient(90deg,hsla(0,0%,100%,0) 0,#fff);
+    /*width: 28.8px;*/
+    right: 0;
+    float: right
+}
+
+#channelSlider .ch-content {
+    position: relative;
+    height: 46.4px;
+    font-size: 15px;
+    font-family: Hiragino Sans GB;
+    color: #626262;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 2.56px;
+    z-index: 10010;
+    -webkit-overflow-scrolling: touch
+}
+
+#channelSlider .ch-content .li:first-child {
+    margin-left: 16px;
+}
+
+#channelSlider .ch-content .ch-tab-item {
+    height: 46.4px;
+    display: inline-block;
+    margin-left: 20px;
+    line-height: 46.4px;
+    text-align: center;
+    z-index: 10005
+}
+
+#channelSlider .ch-content .cur-ch-tab {
+    border-bottom: 2px solid #e00;
+    color: #e00;
+    height: 40px;
+    display: inline-block;
+    position: relative;
+    z-index: 10005
+}
+
+#channelSlider .ch-content .ch-tab {
+    color: #626262;
+    height: 46.4px;
+    display: inline-block;
+    position: relative;
+    z-index: 10005
+}
+
+/*#channelSlider .ch-content .li:first-child {
+    margin-left: 16px;
+}*/
+
+#channelSlider .ch-content .li:last-child {
+    margin-right: 16px;
+}
+
+#channelSlider .ch-content .ch-tab-item {
+    height: 46.4px;
+    display: inline-block;
+    margin-left: 20px;
+    line-height: 46.4px;
+    text-align: center;
+    z-index: 10005;
+}
+
+.for-margin-top {
+    margin-top: 10px
+}
+
+.tuan-new {
+    padding: 0 1px;
+}
+
+.goods_list {
+    margin: 0 1px;
+    overflow: hidden;
+}
+
+.tuan_g {
+    background-color: #fff;
+    border: 1px solid #cbcbcb;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.tuan_g_img {
+    display: block;
+    position: relative;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAEsCAMAAABkJfIZAAAAGXRFW…AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADY4H8CDADljnflZlO+SAAAAABJRU5ErkJggg==) 50% 50% no-repeat;
+}
+
+.tuan_g_img .img {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+
+.tuan-new .label-orange-hot {
+    line-height: 35px;
+    background: url(http://139.199.168.122:8989/Public/Api/images/label-orange-hot.png);
+    background-size: 42px 60px;
+}
+
+.tuan-new .goods-tag {
+    position: absolute;
+    left: 12px;
+    top: 0;
+    width: 42px;
+    height: 60px;
+    /*line-height: 55px;*/
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: PingFang;
+}
+
+.tuan-new .tuan_goods_info {
+    padding: 9px 11px;
+}
+
+.tuan-new .tuan_goods_info .tuan_goods_name {
+    font-size: 15px;
+    color: #151516;
+    height: 21.6px;
+    line-height: 18.88px;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    vertical-align: middle;
+    padding: 0 1.6px;
+    word-break: break-all;
+    white-space: normal;
+    text-align: left;
+    -webkit-box-orient: vertical;
+    text-overflow: clip;
+    word-wrap: break-word;
+    color: #a4a5a7;
+}
+
+.tuan-new .tuan_goods_info .tuan_goods_cx {
+    padding: 6px 0 4px;
+    line-height: 15px;
+    font-size: 13px;
+}
+
+.tuan-new .tuan_goods_info .tuan_goods_cx .span {
+    padding-right: 4px;
+}
+
+.tuan-new .tuan_goods_core {
+    padding: 0 11px 12px;
+}
+
+.tuan-new .tuan_goods_core .tuan_goods_btn {
+    float: right;
+    height: 34px;
+    line-height: 34px;
+    color: #fff;
+    background-color: #e02e24;
+    font-size: 14px;
+    border-radius: 4px;
+    width:87px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.tuan-new .tuan_goods_core .tuan_goods_btn ::after {
+    content: '';
+    display: inline-block;
+    position: relative;
+    width: 5px;
+    height: 8px;
+    background: url("http://139.199.168.122:8989/Public/Api/images/groups_op.png") no-repeat;
+    background-size: 5px 8px;
+    margin-left: 2px;
+    top: -1px;
+}
+
+.tuan-new .tuan_goods_core .tuan_goods_btn .tmp {
+    padding: 0 5px;
+    background: url(http://139.199.168.122:8989/Public/Api/images/tuan_goods_core.png) no-repeat 50%;
+    background-size: 1px auto;
+}
+
+.tuan-new .tuan_goods_core .tuan_goods_price {
+    height: 26px;
+    line-height: 26px;
+    overflow: hidden;
+}
+
+.tuan-new .tuan_goods_core .tuan_goods_price .red {
+    /*font-size: 26px;
+    color: #e02e24;*/
+    font-size: 19.2px;
+    color: #e02e24;
+    margin-right: .06rem;
+    font-weight: 700;
+}
+
+.tuan-new .tuan_goods_core .tuan_goods_price .divide {
+    color: #878787;
+    font-size: 16px;
+}
+
+.tuan-new .tuan_goods_core .tuan_goods_price .spec {
+    color: #878787;
+    font-size: 13px;
+}
+
+.pullUp_show_load_last {
+    margin-top: 7px;
+}
+
+.pullUp_show, .pullUp_show_load_last {
+    height: 45px;
+    width: 100%;
+    visibility: visible;
+}
+
+.center .tip-last {
+    line-height: 20px;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.tuan {
+    min-height: 520px;
+}
+
+.index_loctaion {
+    position: fixed;
+    top: 0;
+    z-index: 10015;
+    height: 34px;
+    width: 100%;
+    background-color: #e02e24;
+}
+
+.index_loctaion .location .i {
+    display: inline-block;
+    z-index: 10016;
+    float: left;
+    margin: 8px -10px 0 8px;
+    height: 25px;
+    width: 32px;
+    background: url(http://139.199.168.122:8989/Public/Api/images/map.png) no-repeat;
+    background-size: 15px 18px;
+}
+
+.index_loctaion .location-arrow {
+    float: right;
+    display: inline-block;
+    margin: 10px 0;
+    width: 22px;
+    height: 22px;
+    background: url(http://139.199.168.122:8989/Public/Api/images/right.png) no-repeat;
+    background-size: 10px 14px;
+}
+
+#slider {
+    height: 100%;
+    max-height: 190px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 55px;
+}
+
+.clear-both {
+    clear: both;
+}
+
+#go-top {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    right: 6%;
+    bottom: 15%;
+    z-index: 999;
+    background: url(http://139.199.168.122:8989/Public/Api/images/top.png) no-repeat;
+    background-size: contain;
+    opacity: 0;
+    -webkit-transition: bottom .8s ease,opacity .6s ease;
+    webkit-transition: bottom .8s ease,opacity .6s ease;
+}
+
+.group-desc {
+    color: #9c9c9c;
+}
+
+.tuan-new_two {
+    width: 48%;
+    position: relative;
+    display: inline-block;
+    margin-bottom: .03rem;
+}
+
+.tuan-new_two .tuan_goods_name {
+    padding: .1rem .09rem 0 .1rem;
+    width: 100%;
+    overflow: hidden;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: justify;
+    font-size: 8px;
+    color: #333;
+    height: 44px;
+    line-height: 15;
+}
+
+
+.recommend .ul .li {
+    /*padding: 0 10px 11px;*/
+    display: block;
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.recommend .ul .li .img .img {
+    height: 100%;
+    width: 100%;
+}
+
+.recommend .ul .li .desc {
+    height: 72px;
+    text-align: left;
+    padding:0 10px;
+    box-sizing: border-box;
+}
+
+.recommend .ul .li .desc .text {
+    display: block;
+    width: 100%;
+    height: auto;
+    height: 44px;
+    padding: 11px 0 5px;
+    line-height: 16px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.recommend .ul .li .desc .detail {
+    height: 24px;
+    line-height: 24px;
+}
+
+.recommend .ul .li .desc .price {
+    line-height: 24px;
+    color: #e02e24;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+.recommend .ul .li .desc .price .small {
+    padding-right: 2px;
+}
+
+.recommend .ul .li .desc .spec {
+    color: #878787;
+    font-size: 12px;
+}
+
+
+.recommend .ul {
+    width: 100%;
+    box-sizing: border-box;
+    /*padding: 0 10px;*/
+}
+
+.recommendA {
+    background-color: #fff;
+    margin-top:55px;
+    padding-bottom:20px;
+}
+
+
+
+.img_list {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.img_wrap {
+    display: inline-block;
+    width: 185rpx;
+    height: 185rpx;
+}
+
+image {
+    width: 100%;
+    height: 100%;
+}
+
+.con {
+    background: none repeat scroll 0 0 #f7f7f7;
+    overflow: hidden;
+}
+
+.mt_nogroups {
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    z-index: 1000;
+    font-size: 18px;
+}
+
+.mt_nogroups .h4 {
+    font-weight: 400;
+}
+
+.market-price {
+    color: #878787;
+    font-size: 12px;
+    text-decoration: line-through;
+}
+
+#rp-banner {
+    position: relative;
+    width: 100%;
+    display: block;
+    overflow-y: hidden;
+}
+
+.rp-islider-dot-wrap {
+    box-sizing: border-box;
+    width: 100%;
+    height: 6px;
+    margin: 0;
+    padding: 0 16px 0 0;
+    bottom: 10px;
+    z-index: 10000;
+    text-align: right;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.rp-islider-dot.active {
+    background-color: #e02e24;
+}
+
+.rp-islider-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    margin: 0 0 6px 6px;
+    position: relative;
+    display: inline-block;
+    list-style: none;
+}
+
+

@@ -1,0 +1,177 @@
+.groups_line {
+    width: 100%;
+    height: 17px;
+    background: #f1f1f1;
+    border: 1px solid #eee;
+}
+
+.mt_g {
+    border-bottom: 1px solid #d7d7d7;
+    height: 91px;
+    margin: 0 10px;
+    /*padding: 15px 0 15px 70px;*/
+    position: relative;
+}
+
+.mt_g, .mt_order {
+    background-color: #fff;
+}
+
+.mt_g_img {
+    left: 0;
+    position: absolute;
+    top: 15px;
+}
+
+.mt_g_img .img {
+    border: 1px solid #d7d7d7;
+    display: block;
+    height: 58px;
+    overflow: hidden;
+    width: 58px;
+}
+
+.mt_g_info {
+    font-size: 12px;
+    padding-top: 2px;
+}
+
+.mt_g_name, .prize {
+    display: inline-block;
+}
+
+.mt_g_name {
+    color: #333;
+    height: 18px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    word-wrap: break-word;
+    width: 70%;
+    vertical-align: middle;
+    padding: 15px 0 15px 70px;
+}
+
+.mt_g_price {
+    background-color: #3e3e3e;
+    bottom: 18px;
+    color: #fff;
+    font-size: 13px;
+    height: 26px;
+    left: 70px;
+    line-height: 26px;
+    margin-left: 10px;
+    padding-left: 30px;
+    position: absolute;
+    width: 155px;
+}
+
+
+.mt_g_price:before, .mt_g_price .i:before {
+    background-image: url(http://139.199.168.122:8989/Public/Api/images/bg_v6_afc11c.png);
+    background-repeat: no-repeat;
+    background-size: 365px 490px;
+}
+
+.mt_g_price:before {
+    background-position: -285px 0;
+    content: " ";
+    height: 34px;
+    left: -10px;
+    position: absolute;
+    top: -4px;
+    width: 34px;
+}
+
+.mt_g_price .span {
+    font-size: 9px;
+    vertical-align: middle;
+}
+
+.mt_g_price .span .b {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.small {
+    font-size: 80%;
+}
+
+.mt_status {
+    height: 50px;
+    padding: 0 10px;
+}
+
+.mt_status_txt {
+    color: #e02e24;
+    float: left;
+    line-height: 50px;
+    font-size: 12px;
+}
+
+
+.mt_status_lk1 {
+    border: 1px solid #999;
+    border-radius: 3px;
+    color: #6b6b6b;
+    float: right;
+    height: 29px;
+    line-height: 29px;
+    margin-top: 9px;
+    padding: 0 10px;
+    font-size: 12px;
+}
+
+.marg_right {
+    margin-right: 10px;
+}
+
+.mt_g_price .i {
+    background-color: #e02e24;
+    border-bottom-right-radius: 13px;
+    border-top-right-radius: 13px;
+    display: block;
+    height: 26px;
+    position: absolute;
+    right: -26px;
+    top: 0;
+    width: 26px;
+}
+
+
+.mt_g_price:before, .mt_g_price .i:before {
+    background-image: url(http://139.199.168.122:8989/Public/Api/images/bg_v6_afc11c.png);
+    background-repeat: no-repeat;
+    background-size: 365px 490px;
+}
+
+.mt_g_price .i:before {
+    background-position: -209px -59px;
+    content: " ";
+    height: 12px;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    width: 8px;
+}
+
+.con {
+    background: none repeat scroll 0 0 #f7f7f7;
+    overflow: hidden;
+}
+
+.mt_nogroups {
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    z-index: 1000;
+    font-size: 18px;
+}
+
+.mt_nogroups .h4 {
+    font-weight: 400;
+}

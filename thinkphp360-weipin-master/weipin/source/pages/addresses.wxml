@@ -1,0 +1,65 @@
+
+<view class="body" hidden="{{!page.load && !page.operate}}">
+    <view class="div_block div" style="height: 257px;"></view>
+    <view class="div add_address_red">
+        <view class="inner_red div">
+            <navigator  hover-class="none" url="{{goods_id != 'undefined' && goods_id ? './address?goods_id=' + goods_id + '&sell_type=' + sell_type : './address'}}"  class="a add_text_red" style="color:white" id="new">新增地址</navigator>
+        </view>
+    </view>
+    
+    <view class="div wx_bar">
+        <view class="div wx_bar_back">
+            <view class="a " id="listPageback" href="javascript:void(0);"></view>
+        </view>
+        <view class="wx_bar_act div ">
+            <view href="javascript:void(0);" class="a wx_bar_new" style="display: none;" id="_new"></view>
+        </view>
+    </view>
+    <view class=" div wx_wrap">
+        <view class="div address_list" id="addressList" style="-webkit-transform-origin: 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);">
+            <view avalonctrl="div address">
+                <view class="div address"><!--each9081914561689244681311523268787--><!-- ms-class="selected:el.status=='DEFAULT'" -->
+                    
+                    <block wx:key="item" wx:for="{{address_list}}">
+                    
+                    <view class="div wrap_address">
+                        <view class="span address_name">{{item.address_name == "HOME" ? "家庭" : "公司"}}</view><!--ms-if-->
+                        <view class="span none" wx:if="{{item.status == 'DEFAULT'}}">默认</view>
+                        <!--ms-if-->
+                    </view>
+                    <view class=" ul {{goods_id != 'undefined' && goods_id && address_id == item.address_id ? 'marginleft bg_color' : ''}}" adid="4" rgid="330108" level="undefined" addetail="世界包装中心1号楼402乐其" type="0" bindtap="selectedDEFAULT" data-index="{{index}}">
+                        <view class="li add_li"><view class="strong">{{item.receive_name}}</view></view>
+                        <view class="li">{{item.mobile}}</view>
+                        <view class="li add_li_font"><view class="span" style="display: inline;">{{item.province}}{{item.city}}</view></view>
+                        <view class="li add_li_font"><view class="span" style="display: inline;">{{item.address}}</view></view>
+                        <view style="display:none" class="li def_add_id">{{item.address_id}}</view>
+                        <view class="li edit" catchtap="edit" data-address_id="{{item.address_id}}">编辑</view>
+                        <view class="span icon_address1 {{address_id == item.address_id ? 'bg_color' : ''}}" wx:if="{{goods_id != 'undefined' && goods_id}}"></view>
+                        <view class="span {{item.status == 'DEFAULT' ? 'icon_address' : ''}}" wx:else></view>
+                        <!--ms-if-->
+                    </view><!--each9081914561689244681311523268787--><!-- ms-class="selected:el.status=='DEFAULT'" -->
+                    </block>
+                    <!--
+                    <view class="div wrap_address">
+                        <view class="span address_name"> 公司</view>
+                        <view class="span none">默认</view>
+                    </view>
+                    <view class="ul" adid="4" rgid="330108" level="undefined" addetail="世界包装中心1号楼402乐其" type="0"  bindtap="selectedDEFAULT">
+                        <view class="li add_li"><view class="strong">陈贝</view></view>
+                        <view class="li">18867792670</view>
+                        <view class="li add_li_font"><view class="span" style="display: inline;">浙江温州</view></view>
+                        <view class="li add_li_font"><view class="span" style="display: inline;">聚盟商大厦10楼</view></view>
+                        <view style="display:none" class="li def_add_id">13258567</view>
+                        <view class="li edit">编辑</view>
+                        <view class="span icon_address"></view>
+                    </view></view>
+                    -->
+            </view>
+
+            <view class="div margin_footer"></view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<include src="common/footer.wxml"/>

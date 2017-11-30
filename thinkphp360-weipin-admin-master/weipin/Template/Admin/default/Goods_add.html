@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$tpltitle}后台用户</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidator.js"></script>
+
+
+<script charset="utf-8" src="__PUBLIC__/vendor/kindeditor/kindeditor-all-min.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+			window.top.art.dialog({content:msg,lock:true,width:250,height:100,ok:function(){$(obj).focus();}});
+		},onsuccess:function(msg,data){
+			if($(".goods_img").length <= 0) {
+				$("#insertImgBtn").css({'box-shadow' : '0px 0px 20px red',"border" : "5px solid red"});
+				$('html,body').animate({scrollTop:0},700);
+				return false;
+			}
+			$(".input").attr("disabled","disabled");var form = $('#myform');$.post(form[0].action, form.serialize(),function(res) {if(!res.status) {$(".input").removeAttr("disabled");window.top.$.thinkbox.error(res.info);return (false);}if(res.status) {window.top.$.thinkbox.success(res.info);setTimeout(function(){if(res.url != undefined && res.url) {window.location = res.url;} else {window.location.reload();}},2000);return (false);}});return false;
+		}});
+		
+
+
+		
+
+
+		$('#goods_name').formValidator({onshow:"请输入商品名称",onfocus:"请输入商品名称"}).inputValidator({min:1,onerror:"商品名称必须填"});
+		
+		
+		$('#market_price').formValidator({onshow:"请输入市场价",onfocus:"请输入市场价"}).inputValidator({min:1,onerror:"市场价必须填"});
+		$('#group_price').formValidator({onshow:"请输入团购价",onfocus:"请输入团购价"}).inputValidator({min:1,onerror:"团购价必须填"});
+		$('#group_number').formValidator({onshow:"请输入团购人数",onfocus:"请输入团购人数"}).inputValidator({min:1,onerror:"团购人数必须填"});
+		$('#alone_price').formValidator({onshow:"请输入单独购买价格",onfocus:"请输入单独购买价格"}).inputValidator({min:1,onerror:"单独购买价格必须填"});
+		$('#limit_buy').formValidator({onshow:"每人团购限购几件，不限制则为0",onfocus:"每人团购限购几件，不限制则为0"}).inputValidator({min:1,onerror:"此项为必填项"});
+		$('#goods_stock').formValidator({onshow:"请输入商品库存",onfocus:"请输入商品库存"}).inputValidator({min:1,onerror:"此项为必填项"});
+	});
+</script>
+
+
+
+</head>
+<body>
+		<gt name="info.goods_id" value="0">
+			<form action="{:U('Goods/edit')}" method="post" name="form" id="myform">
+			<input type="hidden" name="goods_id" value="{$info.goods_id}">
+		<else />
+			<form action="{:U('Goods/add')}" method="post" name="form" id="myform">
+		</gt>
+			<table width="98%" border="0" cellpadding="4" cellspacing="1" class="table">
+
+				<tr class="table_title">
+					<td colspan="4">{$tpltitle}商品管理</td>
+				</tr>
+				
+
+				<tr class="tr rt">
+					<td >商品名称：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="goods_name" id="goods_name" style="width:400px" value="{$info.goods_name}">
+					</td>
+				</tr>
+				
+				<tr class="tr rt">
+					<td >所属分类：</td>
+					<td colspan="3" class="lt">
+						<select name="cate_id">
+							{$select_categorys}
+						</select>
+					</td>
+				</tr>
+
+				<tr class="tr rt">
+					<td >购买类型：</td>
+					<td colspan="3" class="lt">
+						<select name="sell_type">
+
+							<option value="0" <eq name="info[sell_type]" value="0">selected</eq>>不限</option>
+							<option value="1" <eq name="info[sell_type]" value="1">selected</eq>>仅团购</option>
+							<option value="2" <eq name="info[sell_type]" value="2">selected</eq>>仅单买</option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr class="tr rt">
+					<td >商品库存：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="goods_stock" id="goods_stock" style="width:100px" value="{$info.goods_stock}">
+					</td>
+				</tr>
+				
+
+				<tr class="tr rt">
+					<td >商品主图：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="image_url" id="image_url" style="width:400px" value="{$info.image_url}">
+						<a href="javascript:void(0)" id="upImageBtn">上传图片</a>
+						<span style="color:#c5b7b7;">&nbsp;&nbsp;&nbsp;750px * 352px</span>
+					</td>
+				</tr>
+				
+				
+				<tr class="tr rt">
+					<td >商品图片：</td>
+					<td colspan="3" class="lt">
+						<ul id="J_imageView">
+							<!--插入图片-->
+							<php>
+								$info['goods_imgs'] = unserialize($info['goods_imgs']);
+							</php>
+
+							<foreach  name="info.goods_imgs" item="data" key="i">
+								<li class="goods_img">
+									<img src="{$data}">
+									<a href="javascript:void(0)" class="del_img"><input type="hidden" name="goods_imgs[]" value="{$data}">删除</a>
+								</li>
+							</foreach >
+
+							<li class="insertImgBtn" id="insertImgBtn">
+								<a href="javascript:void(0)">640px * 400px</a>
+							</li>
+						</ul>
+
+					</td>
+				</tr>
+				
+				
+				<tr class="tr rt">
+					<td >市场价：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="market_price" id="market_price" style="width:100px" value="{$info.market_price}">
+					</td>
+				</tr>
+				<tr class="tr rt">
+					<td >团购价：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="group_price" id="group_price" style="width:100px" value="{$info.group_price}">
+					</td>
+				</tr>
+				
+				<tr class="tr rt">
+					<td >团购人数：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="group_number" id="group_number" style="width:100px" value="{$info.group_number}">
+					</td>
+				</tr>
+				
+				
+				<tr class="tr rt">
+					<td >单独购买价格：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="alone_price" id="alone_price" style="width:100px" value="{$info.alone_price}">
+					</td>
+				</tr>
+				
+				
+				
+				<tr class="tr rt">
+					<td >团购限制次数：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="limit_buy" id="limit_buy" style="width:100px" value="{$info.limit_buy|default=0}">
+						
+					</td>
+				</tr>
+
+				<tr class="tr rt">
+					<td >商品描述：</td>
+					<td colspan="3" class="lt">
+						<textarea name="goods_desc" id="goods_desc" >{$info.goods_desc}</textarea>
+						
+					</td>
+				</tr>
+				
+				
+				<tr class="tr rt">
+					<td >排序权重：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="goods_sort" id="goods_sort" style="width:100px" value="{$info.goods_sort|default=0}">
+						
+					</td>
+				</tr>
+				
+				
+				
+
+
+	<tr class="tr lt">
+		<td colspan="4">
+			<input type="hidden" name="dosubmit"/>
+			<gt name="info.goods_id" value="0">
+				<input class="bginput" type="submit" value="修 改" >
+				<else />
+				<input class="bginput" type="submit" value="添 加"></gt>
+			&nbsp;
+			<input class="bginput" type="button" onclick="javascript:history.back(-1);" value="返 回" ></td>
+	</tr>
+</table>
+</form>
+<include file="Index:footer" />
+           
+           <!--     box-shadow: 0px 0px 20px red; -->
+<script>
+        
+		
+		KindEditor.ready(function(K) {
+			var editor1 = K.create('#goods_desc', {
+				uploadJson : "{:U('Api/File/uploadFile')}",
+				allowFileManager : false,
+				width : '700px',
+				height : '300px',
+				allowFlashUpload : false,
+				allowMediaUpload : false,
+				allowFileUpload : false,
+				afterBlur: function () { this.sync(); },
+				urlType : "domain"
+			});
+			
+			K('#upImageBtn').click(function(){
+				editor1.plugin.imageDialog({
+					imageUrl : K('#image_url').val(),
+					clickFn : function(url, title, width, height, border, align) {
+						if(!/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(url))
+							K('#image_url').val("{:RTRIM(C('web_url'),'/')}" + url);
+						 else
+							K('#image_url').val(url);
+						editor1.hideDialog();
+					}
+				});	
+			});
+			
+			
+			K('#insertImgBtn').click(function(){
+				editor1.plugin.multiImageDialog({
+					clickFn : function(urlList) {
+						var div = K('#insertImgBtn');
+						//div.html('');
+						var imgcount = $('.imgs_arr').length;
+						K.each(urlList, function(i, data) {
+							i = imgcount + i + 1;
+							div.before('<li class="goods_img"><img src="'+ data.url +'"><a href="javascript:void(0)" class="del_img"><input type="hidden" name="goods_imgs[]" value="'+ data.url +'">删除</a></li>');
+							div.css({'box-shadow' : '',"border" : ''});
+						});
+						$('.del_img').click(function(){
+							$(this).parent('li').remove();
+						});
+
+						$("#J_imageView li").hover(function(){
+							$(this).children('a').show();
+						},function(){
+							$(this).children('a').hide();
+						});
+
+						editor1.hideDialog();
+					}
+				});
+				
+			});
+			
+			
+			
+		});
+
+		$("#J_imageView li").hover(function(){
+			$(this).children('a').show();
+		},function(){
+			$(this).children('a').hide();
+		});
+
+		$('.del_img').click(function(){
+			$(this).parent('li').remove();
+		});
+		
+</script>
+
+</body>
+</html>

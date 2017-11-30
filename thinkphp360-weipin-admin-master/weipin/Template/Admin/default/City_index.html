@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/vendor/datepicker/WdatePicker.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<style>
+	.ttr{background: #fff;}
+	.ttr .tdt{font-weight: bold;}
+</style>
+<body>
+		<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="3" class="table_title">
+				<span class="fl">地区信息</span>
+				<span class="fr">
+					
+					<form action="{:U('City/add')}" method="post"  onSubmit="return ajaxForm(this)">
+					新增{$t}
+						<input type="text" name="region_name" />
+						<input type="hidden" name="parent_id" value="{$_GET['id']|default=0}" />
+						<input type="hidden" name="level" value="{$region[level] +1}" />
+
+						<input type="submit"  value="新增" />
+					</form>
+				</span>
+
+			</td>
+		</tr>
+
+
+		<tr class="tr ct">
+          <td colspan="3" valign="middle">
+            [{$region[region_name]}]	{$t}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('City/index',array('id'=>$region[parent_id]))}">返回上一级</a>
+          </td>
+        </tr>
+
+		<volist name="list" id="vo" key="i">
+			
+			<if condition="$i == 1">
+			 	<tr class="tr ct">
+			</if>
+
+			<td valign="middle">
+           		{$vo.region_name} <if condition="$vo[level] lt 3"><a href="{:U('City/index',array('id'=>$vo[region_id]))}">管理</a></if>
+
+           			<a href="javascript:void(0)" onclick="return confirmurl('{:U('City/del/',array('id'=>$vo['region_id']))}','确定删除该地区吗？')">删除</a>
+          	</td>
+			
+	
+			
+			<if condition="$i % 3 == 0 || $i == count($list)">
+			 	</tr>
+			</if>
+			<if condition="$i % 3 == 0">
+			 	<tr class="tr ct">
+			</if>
+		</volist>
+		
+			
+		
+
+		
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+<script>
+	//取消订单
+	function concelOrder(id){
+		if(confirm('确定取消该订单？')){
+			$.ajax({
+				 type: "POST",
+				 url: "{:U('Admin/Orders/cancel')}",
+				 data: {order_id:id, remark:$("#do_remark").val()},
+				 dataType: "json",
+				 success:function(e){
+				 	if(e.result == 'ok'){
+				 		alert('订单取消成功');
+				 		location.reload();
+				 	}else{
+				 		alert('取消订单失败');
+				 	}
+				 }
+			})
+		}
+	}
+	//确认订单
+	function confirmOrder(id){
+		if(confirm('确认该订单？')){
+			$.ajax({
+				 type: "POST",
+				 url: "{:U('Admin/Orders/confirm')}",
+				 data: {order_id:id, remark:$("#do_remark").val()},
+				 dataType: "json",
+				 success:function(e){
+				 	if(e.result == 'ok'){
+				 		alert('确认订单成功');
+				 		location.reload();
+				 	}else{
+				 		alert('确认订单失败');
+				 	}
+				 }
+			})
+		}
+	}
+
+	//发货
+	function sendOrder(id){
+		window.top.art.dialog.open('{:U('Orders/delivery/')}'+'&order_id='+id,{title: '设置发货', width: 600, height: 500});
+	}
+</script>
+</body>
+	</html>

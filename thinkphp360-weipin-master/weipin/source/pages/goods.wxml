@@ -1,0 +1,234 @@
+<view class="container" hidden="{{!page.load && !page.operate || notNetCon.error == 1 && notNetCon.show == 1}}">
+    <view class="main-view">
+
+        <view class="goods-banner" id="banner">
+            <view class="div banner-index" hidden="{{gallery.length <= 1}}">{{current}} / {{gallery.length}}</view>
+            <!--图片详情图片轮播-->
+            <!--style='height:{{imageheight}}px;background-color:#fff;'-->
+            <swiper bindchange="bindchange" indicator-color="#eceded" indicator-active-color="#e02e24"  indicator-dots="{{indicatorDots}}"
+            autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" wx:if="{{gallery}}" circular="true" style="height:{{goods_banner.height || '750rpx'}}" >
+            <block wx:key="item" wx:for="{{gallery}}" wx:for-index="idx">
+                <swiper-item>
+                <image lazyload="true" bindtap="previewImage" data-idx="{{idx}}"  src="{{item.img_url}}"  class="slide-image" style='height:{{goods_banner.height || "750rpx"}};width:{{goods_banner.width}}'/>
+                </swiper-item>
+            </block>
+            </swiper>
+        </view>
+
+        <view class="goods-info goods-white div">
+            <view class="goods-name div">{{goods.goods_name}}</view>
+             <view class="p tuan_goods_cx">
+                <view class="span"></view>
+                <!--<block wx:for="{{goods.key_words.normal_keywords}}" wx:for-index="index_nk" wx:for-item="item_nk">
+                    <view class="span"  wx:if="{{index_nk == 0}}" >{{item_nk}}</view>
+                    <view class="span" wx:else ><view class="span">·</view>{{item_nk}}</view>
+                </block>-->
+            </view> 
+
+            <view class="goods_price div">
+                <view class="red span" style="{{goods.sell_type == 2 ? 'display:none;' : ''}}">
+                    <view class="red-padding span">￥</view>
+                    {{goods.group_price}} 
+                </view>
+
+                 <view class="red span" style="{{goods.sell_type == 2 ? '' : 'display:none;'}}">
+                    <view class="red-padding span">￥</view>
+                    {{goods.alone_price}} 
+                </view>
+                <!--<view class="price-spec span">
+                    <view class="span">/</view>
+                    4个 
+                </view>-->
+                <view class="grey span" style="{{goods.sell_type == 2 ? 'display:none;' : 'text-decoration:none;'}}">
+                    {{goods.group_number}}人团
+                </view>
+
+                <view class="grey span" style="{{goods.sell_type == 2 ? 'text-decoration:none;' : 'display:none;'}}">
+                    单独购
+                </view>
+
+
+                <view class="grey span">
+                    <view class="grey-padding span">
+                        <view class="small">￥</view>
+                    </view>
+                      {{goods.market_price}}
+                </view>
+                <view class="market-price span">（市场价）</view>
+            </view>  
+
+            <view class="goods-sold div">
+                累计销量：{{goods.sell_count < 10000 ? goods.sell_count : "10000+"}}件
+            </view>
+
+            <view class="goods-out-pic div" wx:if="{{isShow_out}}"></view>
+            
+
+
+            <!--
+            <view bindtap="show_group_desc" class="rule-intro div" style="{{goods.sell_type == 2 ? 'display:none;' : ''}}">*开团并邀请{{goods.group_number - 1}}人参团，人数不足自动退款，详见<view class="span" >拼团玩法</view></view>
+            -->
+            
+
+            <view class="div goods-bottom-bar" data-reactid="60" hidden="{{!goods_banner.height}}">
+                    
+                        <view class="div goods-home-button" data-reactid="61" catchtap="toIndex">
+                            <view class="span" data-reactid="62">首页</view>
+                        </view>
+                    
+                <!--<view class="div goods-unlike-button" data-reactid="63"><view class="span" data-reactid="64">收藏</view>
+                </view>-->
+               
+                    <button open-type="contact" style="background-color:#FFF;border-radius:0px" class="div goods-chat-button" data-reactid="65"><view class="span" data-reactid="66">客服</view>
+                    </button>
+               
+
+                 
+                    <view class="div {{goods.sell_type == 2 ? 'goods-group-btn' : 'goods-direct-btn'}}" data-reactid="67" wx:if="{{!isShow_out && (goods.sell_type == 0 || goods.sell_type == 2)}}">               <navigator url="./checkout?goods_id={{goods.goods_id}}&sell_type=2" class="white">
+                    <view class="span goods-buy-price" data-reactid="68">
+                        <view class="i" data-reactid="69">￥</view><!-- react-text: 70 -->{{goods.alone_price}}<!-- /react-text --></view>
+                        <view class="span" data-reactid="71">单独购买</view>
+                        </navigator>
+                    </view>
+                
+
+                
+                <view class="div goods-group-btn" data-reactid="72" wx:if="{{!isShow_out && (goods.sell_type == 0 || goods.sell_type == 1)}}">              <navigator url="./checkout?goods_id={{goods.goods_id}}&sell_type=1" class="white">
+                <view class="span goods-buy-price" data-reactid="73">
+                    <view class="i" data-reactid="74">￥</view><!-- react-text: 75 -->{{goods.group_price}}<!-- /react-text --></view>
+                    <view class="span" data-reactid="76">一键开团</view>
+                 </navigator>
+                </view>
+               
+
+                
+                <view class="div goods-out-btn" data-reactid="42" wx:if="{{isShow_out}}" catchtap="toIndex">已售罄</view>
+                
+            </view>
+            
+
+        </view>
+
+         <view class='div g-mall-service' catchtap="show_service_detail">
+            <view class="div g-service-list" data-reactid="29">
+                <view class="span g-service-item" data-reactid="30">全场包邮</view>
+                <view class="span g-service-item" data-reactid="31">7天退换</view>
+                <view class="span g-service-item" data-reactid="32">48小时发货</view>
+                <view class="span g-service-item" data-reactid="33">假一赔十</view>
+            </view>
+        </view>
+
+        <view id="g-local-groups"  wx:if="{{groups.goods_groups.length > 0}}" hidden="{{!goods_banner.height || isShow_out}}">
+                <view class="div local-groups-title" data-reactid="35" bindtap="show_group_list">
+                    <view style="display:inline-block;float:left;">{{groups.groups}}人在开团</view>
+                    <view class="div see-more-button" style="display:block;" data-reactid="37">查看更多</view>
+                </view>
+
+                <block wx:for="{{ groups.goods_groups }}" wx:key="item">
+                  <navigator url="group?id={{item.group_order_id}}" hover-class="none" wx:if="{{index + 1 <= 2}}">
+                    <view class="div local-group-item" data-reactid="38">
+                        <image class="img local-group-img" src="{{item.avatar}}" data-reactid="39">
+                        </image>
+
+                        <view class="div local-group-detial" data-reactid="40">
+                            <view class="div local-group-detial-row1" data-reactid="41">
+                                <view class="span local-group-name" data-reactid="42">{{item.nickname}}</view></view>
+                                <view class="div local-group-detial-row2" data-reactid="43">
+                                <view class="span local-group-timer" data-reactid="44">还差{{item.require_num - item.people}}人，剩余{{clock[index][0]}}:{{clock[index][1]}}:{{clock[index][2]}}</view></view></view><view class="div local-group-btn-border" data-reactid="55">去参团</view>
+                        </view>
+                    </navigator>
+                </block>
+            </view>
+
+
+            <view class="image-text goods-white goods-details" hidden="{{!goods_banner.height}}">
+                <view class="text-title">商品详情</view>
+                <view class='goods-detail'>
+                   <import src="../utils/wxParse/wxParse.wxml" />
+                
+                    <template is="wxParse" data="{{wxParseData:goods_desc.nodes}}"  wx:if="{{!isShow_out}}"/>
+                </view>
+               
+            
+            </view>
+
+
+    </view>
+
+    <view  class="goods-recommend-bottom">
+        <view class="goods-recommend-line"></view><view class="p">已经到底部了</view>
+    </view>
+
+</view>
+
+<view class="group-detail" hidden="{{!show_group_desc}}" bindtap="close_group_desc">
+<view class="div group-detail-notice-container" style="display:;" data-reactid="71">
+<view class="div notice-pop-container" data-reactid="82" catchtouchmove="stop">
+    <view  data-reactroot="" class="div notice-pop">
+        <view class="div mask"></view>
+        <view class="div notice-pop-content">
+            <view class="div notice-pop-title">如何参加拼团</view>
+            <view class="ul notice-pop-list">
+                <view class="li join">开团或参加别人的团</view>
+                <view class="li time">在规定的时间内，邀请好友参团</view>
+                <view class="li send">达到拼团人数，分别给团长和团员发货</view>
+                <view class="li withdraw">未达到拼团人数，货款将自动原路返还</view>
+            </view>
+        </view>
+    </view>
+</view>
+</view>
+</view>
+
+<view class="div"  catchtouchmove="stop" wx:if="{{show_group_list}}">
+    <view data-reactroot="" class="div local-groups-popup-wrapper"><view class="div lgp-position">
+    <view class="div lgp-modal"><view class="div lgp-title">正在开团</view><view class="div lgp-content">
+
+    <block wx:for="{{ groups.goods_groups }}" wx:key="item">
+        <navigator url="group?id={{item.group_order_id}}" hover-class="none" wx:if="{{index + 1 <= 5}}">
+            <view class="div popup-local-group-item">
+                <image class="popup-local-group-img" src="{{item.avatar}}"></image>
+
+                <view class="div popup-local-group-detail">
+                <view class="div popup-local-group-detail-row1">
+                <view class="span popup-local-group-name">{{item.nickname}}</view>
+                <view class="span popup-local-group-left-num">还差{{item.require_num - item.people}}人</view></view>
+                <view class="div popup-local-group-detail-row2">
+                <view class="span popup-local-group-timer">剩余{{clock[index][0]}}:{{clock[index][1]}}:{{clock[index][2]}}</view></view></view>
+                <view class="div popup-local-group-btn-border">去参团</view>
+            </view>
+        </navigator>
+    </block>
+
+    </view>
+    <view class="div lgp-footer">仅显示5个正在开团的人</view>
+    <view class="div lgp-close" bindtap="close_group_lists"></view></view></view>
+    <view class="div lgp-background"></view></view>
+</view>
+
+
+<view class="section service-detail-bg" wx:if="{{service_detail}}" catchtouchmove="stop" bindtap="close_service_detail">
+    <view class="div service-detail-main main-show" catchtap="stop">
+        <view class="div service-title" ><view class="span">服务说明</view>
+            <view class="div service-close-btn" catchtap="close_service_detail"></view></view>
+        <view class="div" id="service-list" style="overflow: hidden;">
+        <view class="div service-item"><view class="span ms-item-icon"></view>
+        <view class="span service-item-name">全场包邮</view>
+            <view class="span service-item-desc">所有商品均无条件包邮</view></view>
+        <view class="div service-item">
+        <view class="span ms-item-icon"></view>
+        <view class="span service-item-name">7天退换</view>
+        <view  class="span service-item-desc">商家承诺7天无理由退换货</view></view>
+        <view  class="div service-item"><view  class="span ms-item-icon"></view>
+        <view class="span service-item-name">48小时发货</view>
+        <view class="span service-item-desc">若超时未发货，商家将补偿3元无门槛代金券</view></view>
+        <view class="div service-item"><view class="span ms-item-icon"></view>
+        <view  class="span service-item-name">假一赔十</view>
+        <view  class="span  service-item-desc">若收到的商品是假冒品牌，可获得加倍赔偿</view></view></view></view>
+    </view>
+
+<include src="common/footer.wxml"/>
+
+<!-- 引入图片预加载组件 -->
+<import src="../utils/img-loader/img-loader.wxml"/>
+<template is="img-loader" data="{{ imgLoadList }}"></template>

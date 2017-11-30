@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$tpltitle}菜单(节点)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidator.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidatorRegex.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+			window.top.art.dialog({content:msg,lock:true,width:250,height:100,ok:function(){$(obj).focus();}});
+		},onsuccess:function(msg,data){$(".input").attr("disabled","disabled");var form = $('#myform');$.post(form[0].action, form.serialize(),function(res) {if(!res.status) {$(".input").removeAttr("disabled");window.top.$.thinkbox.error(res.info);return (false);}if(res.status) {window.top.$.thinkbox.success(res.info);setTimeout(function(){if(res.url != undefined && res.url) {window.location = res.url;} else {window.location.reload();}},2000);return (false);}});return false;
+		}});
+		$("#shipping_name").formValidator({onshow:"请输入物流名称",onfocus:"请输入物流名称"}).inputValidator({min:1,onerror:"物流名称必须填写"});
+		$("#shipping_code").formValidator({onshow:"请输入菜单代码",onfocus:"请输入物流代码"}).inputValidator({min:1,onerror:"物流代码必须填写"});
+		
+	});
+</script>
+</head>
+<body>
+		<gt name="info.shipping_id" value="0">
+			<form action="{:U('Shipping/edit')}" method="post" name="form" id="myform">
+			<input type="hidden" name="shipping_id" value="{$info.shipping_id}">
+		<else />
+			<form action="{:U('Shipping/add')}" method="post" name="form" id="myform">
+		</gt>
+			<table width="98%" border="0" cellpadding="4" cellspacing="1" class="table">
+
+				<tr class="table_title">
+					<td colspan="4">{$tpltitle}菜单(节点)</td>
+				</tr>
+			
+				<tr class="tr rt">
+					<td width="100">物流名称：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="shipping_name" id="shipping_name" style="width:200px" value="{$info.shipping_name}">
+					</td>
+				</tr>
+
+				<tr class="tr rt">
+					<td width="100">物流代码：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="shipping_code" id="shipping_code" style="width:200px" value="{$info.shipping_code}">
+					</td>
+				</tr>
+
+			
+				
+	<tr class="tr lt">
+		<td colspan="4">
+			<input type="hidden" name="dosubmit"/>
+			<gt name="info.shipping_id" value="0">
+				<input class="bginput" type="submit" value="修 改" >
+				<else />
+				<input class="bginput" type="submit" value="添 加"></gt>
+			&nbsp;
+			<input class="bginput" type="button" onclick="javascript:history.back(-1);" value="返 回" ></td>
+	</tr>
+</table>
+</form>
+<include file="Index:footer" />
+</body>
+</html>

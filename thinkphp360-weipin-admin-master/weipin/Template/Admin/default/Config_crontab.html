@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>服务器定时任务设置方法</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidator.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidatorRegex.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+
+</head>
+<body>
+服务器定时任务设置教程：
+
+
+网站定时任务设置比较繁琐。。本程序添加了HTTP接口。通过定时访问该接口达到定时执行任务的目的。<br>
+
+定时执行任务接口：{:(is_ssl()?'https://':'http://').$_SERVER['HTTP_HOST']}/?g=Api&m=Project&a=crontab <br>
+
+
+使用360网站监控创建定时任务<br>
+
+登录 http://jk.cloud.360.cn/ 选择监控 HTTP监控 创建监控项 <br>
+
+监控名称随意填写  监控对象写上面的定时执行任务接口<br>
+
+监测点只能选择一个，最好是离自己服务器所在地最近的<br>
+
+
+然后点确认即可开始执行定时任务
+
+<include file="Index:footer" />
+</body>
+</html>

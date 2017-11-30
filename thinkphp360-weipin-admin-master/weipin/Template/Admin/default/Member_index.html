@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="9" class="table_title">
+				<span class="fl">会员管理</span>
+				<span class="fr">
+					<!--<a href="{:U('Goods/add')}">添加物品</a>-->
+				</span>
+			</td>
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td >用户头像</td>
+				<td >会员名称</td>
+				<td >OpenId</td>
+				<td width="70">是否授权</td>
+				<td width="70">注册时间</td>
+				<td width="100">管理操作</td>
+			</tr>
+	    <volist name="list" id="vo">
+			<tr class='tr'>
+				<td align='center'>{$vo.member_id}</td>
+				<td align='center'><img src="{$vo.headimgurl}" width="30px" height="30px" alt="" /></td>
+				<td >{$vo.nickname}</td>
+				
+				<td align='center'>{$vo.open_id}</td>
+				<td align='center'><eq name="vo.subscribe" value="1"><font color="red">√</font><else/><font color="blue">×</font></eq> </td>
+
+				<td align='center'>{$vo.time|date='Y-m-d H:i:s',###}</td>
+				<td align='center'>
+					<a href="{:U('Member/edit/',array('id'=>$vo['member_id']))}">查看</a>
+					|<a href="javascript:void(0)" onclick="return confirmurl('{:U('Member/del/',array('id'=>$vo['member_id']))}','确定删除该会员吗？')">删除</a>
+				</td>
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="9" class="pages">
+            {$page}
+          </td>
+        </tr>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+</body>
+	</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>云配置</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/formValidator.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/formValidatorRegex.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+                window.top.art.dialog({content:msg,lock:true,width:250,height:100,ok:function(){$(obj).focus();}});
+            }});
+
+            $('.disabled').click(function() {
+                if($(this).prev('input').val().trim()) {
+                    window.top.$.thinkbox.error($(this).parents('tr').find('.left').text() + "已经存在内容");return false;
+                }
+                return true;
+            });
+
+            $("#pay_notify_tpl,#shipping_notify_tpl,#refound_notify_tpl,#group_notify_tpl").blur(function() {
+                if($(this).val().trim() == '') {$(this).next('a').removeClass('disabled');}
+            });
+        });
+    </script>
+    <style>
+        .disabled {color: rgba(0, 0, 0, 0.2);}
+        .disabled :hover{text-decoration: none;}
+    </style>
+</head>
+<body>
+<table width="98%" border="0" cellpadding="4" cellspacing="1" class="table">
+    <form action="{:U('Config/updatedb')}" method="post" id="myform">
+        <tr  class="table_title">
+            <td colspan="2">微信模板消息</td>
+        </tr>
+        <tr class="ji">
+            <td class="left">是否开启模板消息推送</td>
+            <td>
+                <select name="con[weapp_tpl][open]">
+                    <option value="1" <equal name="con[weapp_tpl][open]" value="1">selected</equal>>开启</option>
+                    <option value="0" <equal name="con[weapp_tpl][open]" value="0">selected</equal>>关闭</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="tr">
+            <td class="left">订单支付成功通知（AT0009）</td>
+            <td><input type="text" name="con[weapp_tpl][pay_notify_tpl]" id="pay_notify_tpl" size="35"  value="{$con.weapp_tpl.pay_notify_tpl}">
+
+                <a href="{:U('Config/get_weapp_tpl',array('id'=>'AT0009','field'=>'pay_notify_tpl'))}" <notempty name="con.weapp_tpl.pay_notify_tpl">class="disabled"</notempty> >一键添加</a>
+            </td>
+        </tr>
+
+        <tr class="tr">
+            <td class="left">订单发货提醒（AT0007）</td>
+            <td><input type="text" name="con[weapp_tpl][shipping_notify_tpl]" id="shipping_notify_tpl" size="35"  value="{$con.weapp_tpl.shipping_notify_tpl}">
+
+                <a href="{:U('Config/get_weapp_tpl',array('id'=>'AT0007','field'=>'shipping_notify_tpl'))}"  <notempty name="con.weapp_tpl.shipping_notify_tpl">class="disabled"</notempty>>一键添加</a>
+            </td>
+        </tr>
+
+        <tr class="tr">
+            <td class="left">退款通知（AT0036）</td>
+            <td><input type="text" name="con[weapp_tpl][refound_notify_tpl]" id="refound_notify_tpl" size="35"  value="{$con.weapp_tpl.refound_notify_tpl}">
+
+                <a href="{:U('Config/get_weapp_tpl',array('id'=>'AT0036','field'=>'refound_notify_tpl'))}" <notempty name="con.weapp_tpl.refound_notify_tpl">class="disabled"</notempty>>一键添加</a>
+            </td>
+        </tr>
+
+        <tr class="tr">
+            <td class="left">参团人数不足提醒（AT0453）</td>
+            <td><input type="text" name="con[weapp_tpl][group_notify_tpl]" id="group_notify_tpl" size="35"  value="{$con.weapp_tpl.group_notify_tpl}">
+
+                <a href="{:U('Config/get_weapp_tpl',array('id'=>'AT0453','field'=>'group_notify_tpl'))}" <notempty name="con.weapp_tpl.group_notify_tpl">class="disabled"</notempty>>一键添加</a>
+            </td>
+        </tr>
+
+        <tr class="ji">
+            <td colspan="2">
+                <input class="bginput" type="button" name="dosubmit" value="提交" onClick="submit_confirm('myform', '请仔细检查后再提交，不正确的参数都将可能导致网站不能正常运行！', 250,100)">
+                <input class="bginput" type="reset" name="Input" value="重置" >
+            </td>
+        </tr>
+    </form>
+</table>
+<include file="Index:footer" />
+</body>
+</html>

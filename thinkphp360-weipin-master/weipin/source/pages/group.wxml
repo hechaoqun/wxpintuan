@@ -1,0 +1,215 @@
+<view class=" body" id="group" hidden="{{!page.load && !page.operate || notNetCon.error == 1 && notNetCon.show == 1}}">
+    <view class="div" id="group-container" style="display: block;">
+        <view class="div explain_modal" >
+            <view class="i explain_lou explain_icon" style="display:none"></view>
+            <view class="i explain_tuan explain_icon" style="display:none"></view>
+            <view class="div" id="showExplain">
+                <view class="div showBg" id="showBg">
+                </view>
+            </view>
+        </view>
+        <view class="div content">
+            <view class="div H5_con" id="group_title">
+            </view>
+
+             <!--拼团失败-->
+            <view class=" div H5_con" id="group_title" hidden="{{!group_order}}">
+                <view class="div tips topStateWrap {{group_order.group_title_class}}">
+                <!--tips_succ tips_err-->
+                <view class="div tips_ico"></view>
+                <view class="div tips_tit">{{group_order.tips_tit}}</view>
+                <view class="div tips_txt">{{group_order.tips_detail}}</view>
+                </view>
+            </view>
+        
+            <view class=" div H5_con" hidden="{{!group_order}}">
+                <view id="group_detail" class="div tm {{group_order.group_detail_class}}" hidden="{{!group_order}}">
+                     <!--tm_succ tm_err-->
+                     <view class="a goItemPage"  bindtap="bindRedirect" data-url="goods?goods_id={{group_order.order.goods_id}}">
+                     <view class="div td tuanDetailWrap">
+                     <view class="div td_img">
+                        <image class="img" alt="" src="{{group_order.order.order_goods.image_url}}" />
+                     </view>
+                     <view class="div td_info margin_height">
+                     <view class="p td_name">{{group_order.order.order_goods.goods_name}}</view>
+                     <view class="p tuan_goods_cx"></view>
+                     <view class="p td_mprice"><view class="tuanTotal span">{{group_order.require_num}}</view>人团：<view class="i">￥</view>
+                     <view class="b">{{group_order.order.order_goods.group_price}}</view></view>
+                     <view class="p"></view>
+                     <view class="p td_num"></view><view class="div img_out" id="img_out"></view></view></view></view>
+                </view>
+                <view class="div pp">
+                    <view class=" div pp_users" id="pp_users">
+                        <block  wx:key="item" wx:for="{{group_order.users}}">
+                            <view class="a pp_users_item pp_users_normal_1" href="#" wx:if="{{index == 0}}">
+                                <image class="img" alt="" src="{{item.avatar}}"/>
+                            </view>
+                            <view class="a pp_users_item pp_users_normal_2" href="#" wx:elif="{{index == 1}}">
+                                <image class="img" alt="" src="{{item.avatar}}"/>
+                            </view>
+                            <view class="a pp_users_item" href="#" wx:else>
+                                <image class="img" alt="" src="{{item.avatar}}"/>
+                            </view>
+                        </block>
+
+                        <block  wx:key="item" wx:for="{{group_order.defaultAvatar}}">
+                            <view class="a pp_users_item" href="#">
+                                <image class="img" alt="" src="{{item}}"/>
+                            </view>
+                        </block>
+                    </view>
+                    <view class=" div pp_tips" id="flag_1_a" style="{{group_order.status == 1 || group_order.status == 9 || group_order.status == 2 || group_order.status == 5  || group_order.status == 6 ? 'display:none;' : ''}}">对于诸位大侠的相助，团长感激涕零</view>
+                    <view class="div pp_tips" id="flag_0_a" style="{{group_order.status == 1 || group_order.status == 9 || group_order.status == 2 || group_order.status == 5  || group_order.status == 6 ? 'display:none;' : ''}}">还差<view class="b">{{group_order.require_num - group_order.people}}</view>人，盼你如南方人盼暖气~</view>
+                    <view class="div pp_state" id="flag_0_b" style="{{group_order.status == 1 || group_order.status == 9 || group_order.status == 2 || group_order.status == 5  || group_order.status == 6 ? 'display:none;' : ''}}">
+                        <view class="div pp_time">
+                            剩余<view id="ti_time_hour" class="span">{{clock[0]}}</view>:<view class="span" id="ti_time_min">{{clock[1]}}</view>:<view class="span" id="ti_time_sec">{{clock[2]}}</view>结束
+                        </view>
+                    </view>
+                    <!--<view class="pp_state_txt" id="flag_1_b" style="display:none;">团购成功，卖家将尽快发货</view> -->
+                </view>
+                <view class=" div pp_list">
+                    <block  wx:key="item" wx:for="{{group_order.users}}">
+                    <view id="div showYaoheList">
+						<view class="div div pp_list_item pp_list_item_1" wx:if="{{index == 0}}">
+							<image class="img pp_list_avatar" alt="" src="{{item.avatar}}" />
+							<view class="div pp_list_info" id="pp_list_info">
+							<view class="span pp_list_name">团长<view class="b">{{item.nickname}}</view></view>
+							<view class="span pp_list_time">{{item.join_time}}开团</view></view>
+						</view>
+							
+						<view class="div div pp_list_item pp_list_item_2" wx:elif="{{index == 1}}">
+							<image class="img pp_list_avatar" alt="" src="{{item.avatar}}" />
+							<view class="div pp_list_info" id="pp_list_info">
+							<view class="span pp_list_name"><view class="b">{{item.nickname}}</view></view>
+							<view class="span pp_list_time">{{item.join_time}}参团</view></view>
+						</view>
+						
+						<view class="div div pp_list_item" wx:else>
+							<image class="img pp_list_avatar" alt="" src="{{item.avatar}}" />
+							<view class="div pp_list_info" id="pp_list_info">
+							<view class="span pp_list_name"><view class="b">{{item.nickname}}</view></view>
+							<view class="span pp_list_time">{{item.join_time}}参团</view></view>
+						</view>
+    					</view>
+					</block>
+						
+                    <view id="chamemeber" class="div pp_list_blank" style="display:none;">
+                        还差
+                        <view class="span"></view> 人，让小伙伴们都来组团吧！
+                    </view>
+                </view>
+            </view>
+            
+            <view id="shareit" bindtap="groupShareUp" class="div" style="{{share_down ? 'display:block;' : 'display:none;'}}">
+                 <image class="arrow" src="http://139.199.168.122:8989/Public/Api/images/share-it.png"/> 
+                <view class="div img-share">
+                    <view class="div img-arrow"></view>
+                    <view class="div img-head">分享至朋友圈</view>
+                    <view class="div img-body">咻的一下就成团！</view>
+                </view>
+                <view id="describe" class="div describe">
+                </view>
+            </view>
+			
+			<!-- 你可能喜欢 -->
+            <view id="recommendA" class="div recommendA" hidden="{{goods == '' || goods == undefined}}">
+				<view class="div recommend" style="display: block;">
+					<view class="div title">你可能喜欢</view>
+					<view class="ul">
+                        <block  wx:key="item" wx:for="{{goods}}">
+                            <view class="li"  bindtap="bindRedirect" data-url="goods?goods_id={{item.goods_id}}">
+                                <view style="{{(index + 1) % 2 == 0 ? 'padding: 10px 0px 20px 0px;' : 'padding: 10px 0px 20px 0px;'}}">
+                                    <view class="div img">
+                                        <image src="{{item.image_url}}" class="img" mode="widthFix"  /></view>
+                                    <view class="div desc">
+                                        <view class="div text">{{item.goods_name}}</view>
+                                        <view class="div detail">
+                                            <view class="span price">
+                                            <view class="small">￥</view>{{item.group_price}}</view> 
+                                            <view class="span spec">
+                                            </view></view>
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+						<view class="div" style="clear:both"></view>
+					</view>
+				</view>
+            </view>
+            <view class="div step">
+                <view class="div step_hd">拼团玩法<view class="a step_more" href="tuan_rule.html" bindtap="show_group_desc">查看详情</view>
+                </view>
+                <view id="footItem" class="div step_list">
+                    <view class="div step_item ">
+                        <view class="div step_num">1</view>
+                        <view class="div step_detail">
+                            <view class="p step_tit">选择
+                                <view class="br"></view>心仪商品</view>
+                        </view>
+                    </view>
+                    <view class="div step_item ">
+                        <view class="div step_num">2</view>
+                        <view class="div step_detail">
+                            <view class="p step_tit">支付开团
+                                <view class="br"></view>或参团</view>
+                        </view>
+                    </view>
+                    <view class="div step_item " id="step_3">
+                        <view class="div step_num">3</view>
+                        <view class="div step_detail">
+                            <view class="p step_tit">等待好友
+                                <view class="br"></view>参团支付</view>
+                        </view>
+                    </view>
+                    <view class="div step_item" id="step_4">
+                        <view class="div step_num">4</view>
+                        <view class="div step_detail">
+                            <view class="p step_tit">达到人数
+                                <view class="br"></view>团购成功</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="div mod_footer" id="mod_footer">
+                <view class="div mod_footer_lk">
+                    <view class="a on" href="index.html" id="shop_name" bindtap="bindRedirect" data-url="index">{{web.name}}</view>
+                    <view class="a" href="groups.html" bindtap="bindRedirect" data-url="groups">我的团</view>
+                </view>
+                <view class="div mod_footer_logo">
+                    <view class="span">{{web.url}}</view>
+                </view>
+            </view>
+            <view style="height:72px;"></view>
+            <view class="br"></view>
+            <view class="br"></view>
+            <view class="br"></view>
+            <view class="br"></view>
+            <view class="div H5_con fixopt" id="fixopt" style="display: block;">
+				<view hidden="{{!group_order.group_but_url}}" class="a fixopt_btn bottomBtn" bindtap="joinGroup" data-url="{{group_order.group_but_url}}" href="index.html">{{group_order.group_but_text}}</view>
+
+                <button style="padding-left:0px;padding-right:0px;font-size:12px;" hidden="{{group_order.group_but_url}}" class="a fixopt_btn bottomBtn" open-type="share" hover-class="none">{{group_order.group_but_text}}</button>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class="group-detail" hidden="{{!show_group_desc}}" bindtap="close_group_desc">
+<view class="div group-detail-notice-container" style="display:;" data-reactid="71">
+<view class="div notice-pop-container" data-reactid="82" catchtouchmove="stop">
+    <view  data-reactroot="" class="div notice-pop">
+        <view class="div mask"></view>
+        <view class="div notice-pop-content">
+            <view class="div notice-pop-title">如何参加拼团</view>
+            <view class="ul notice-pop-list">
+                <view class="li join">开团或参加别人的团</view>
+                <view class="li time">在规定的时间内，邀请好友参团</view>
+                <view class="li send">达到拼团人数，分别给团长和团员发货</view>
+                <view class="li withdraw">未达到拼团人数，货款将自动原路返还</view>
+            </view>
+        </view>
+    </view>
+</view>
+</view>
+</view>
+
+<include src="common/footer.wxml"/>

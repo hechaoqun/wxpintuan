@@ -1,0 +1,7 @@
+{
+    "enablePullDownRefresh": true,
+    "navigationBarTitleText" : "查看物流",
+    "backgroundTextStyle" : "dark",
+    "navigationBarBackgroundColor" : "#fff",
+    "navigationBarTextStyle": "black"
+}

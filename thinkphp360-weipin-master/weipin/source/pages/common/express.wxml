@@ -1,0 +1,37 @@
+<view class="div all_page" ms-if="confirm_code"></view>
+    
+     <view class="ul"class="div express_html" style="{{expressOpen != 1 ? 'display:none;' : ''}}" catchtouchmove="stop">
+        <view class="div dialog_content">
+            <view class="div express_header">物流信息 </view>
+            <view class="div right_pos" catchtap="close_express">
+                <view class="div i">
+                    <image src="http://139.199.168.122:8989/Public/Api/images/close_1.png" class="img cancel_icon"></image>
+                </view>
+                </view>
+                 <view class="div shipper" wx:if="{{shipping_info.tracking_number}}">运单号：<view class="span tracking_number">
+                    {{shipping_info.tracking_number}}
+                </view>
+            </view>
+
+            <scroll-view scroll-y id="express_dialog" class="div express_main" style="outline: none;">
+                <view class="ul express_ui" wx:if="{{shipping_info.traces.length>0}}">
+                    <view class="lili one_expre {{index == 0 ? 'red_color' : ''}}" wx:for="{{shipping_info.traces}}" ms-class="">
+                                <view class="table" width="100%" height="100%">
+                                    <view class="tr"><view  align="center" valign="middle" class="center_middle td exp_middle">
+                                    <view class="div exp_wrapper"><view class="i fa fa-circle exp_circle"></view></view></view><view  class="td exp_detail"><view class="p">{{item.time}}
+                    </view><view class="p">
+                    <view class="span" wx-if="{{item.address.length > 0}}">[{{item.address}}]</view>
+                    {{item.remark}}
+                    </view></view></view></view></view></view>
+
+                <view class="div center" wx-if="{{express.error}}">{{express.info}}</view>
+            
+            </scroll-view>
+            <image class="express_loading" wx-if="{{express.loading}}" src="http://139.199.168.122:8989/Public/Api/images/loading_eb0d43.gif"></image>
+        </view>
+
+        
+        
+        <view class="div dialog_back"></view>
+
+     </view>

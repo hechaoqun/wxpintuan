@@ -1,0 +1,30 @@
+<view class="div">
+<view id="pin-spinner" class="div pin-spinner-2" style="{{page.load ? 'display: none' : 'display: block'}}; width: 66px;">
+    <view class="div" id="ps-background" style="{{page.operate != 1 ? 'display: none' : 'display: block'}}"></view>
+    <view class="div ps-inner-box">
+        <image id="imgInit" class="ps-rotate-img" src="data:image/png;base64,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" style="bottom: 0px;"/>
+    </view>
+    <view id="msgInit" class="div ps-rotate-msg" style="display: none;"></view>
+</view>
+
+<view class="div pin-toast-container" style="{{toast.toast ? 'display: block;opacity: toast.toast;' : 'display: none;opacity: 0;'}}">
+    <view class="div pin-toast" style="{{toast.toast ? 'display: inline-block;opacity: toast.toast;' : 'display: none;opacity: 0;'}}">{{toast.mess}}</view>
+</view>
+
+</view>
+
+
+
+<view class="div" id="main-error" hidden="{{!(notNetCon.error && notNetCon.show && notNetCon.is_ajax)}}">
+	<view class="div error-img"></view>
+	<view class="error-msg">服务器君吃撑了~请再试试</view>
+	<view class="div error-btn" bindtap="refresh">刷新看看</view>
+</view>
+
+
+<view class="div" id="main-error" hidden="{{!(notNetCon.error && notNetCon.show && !notNetCon.is_ajax)}}">
+	<view class="div error-noimage"></view>
+	<view class="error-msg">手机网络不太流畅，请检查网络状况</view>
+	<view class="div error-btn" bindtap="refresh">重新加载</view>
+</view>
+

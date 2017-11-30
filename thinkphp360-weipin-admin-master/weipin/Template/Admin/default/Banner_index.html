@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="9" class="table_title">
+				<span class="fl">Banner管理</span>
+				<span class="fr">
+					<a href="{:U('Banner/add')}">添加banner</a>
+				</span>
+			</td>
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td >Banner名称</td>
+				<td >Banner类型</td>
+				<td width="70">上架状态</td>
+				<td width="70">结束时间</td>
+				<td width="100">管理操作</td>
+			</tr>
+	    <volist name="list" id="vo">
+			<tr class='tr'>
+				<td align='center'>{$vo.banner_id}</td>
+				<td align='center'>{$vo.banner_name}</td>
+				
+				<td align='center'><eq name="vo.banner_type" value="1"><font color="red">√</font><else/><font color="blue">×</font></eq> </td>
+				
+				<td align='center'>{:get_color_date('Y-m-d H:i:s', $vo['start_time'])}</td>
+				<td align='center'>{:get_color_date('Y-m-d H:i:s', $vo['end_time'])}</td>
+				
+				<td align='center'>
+					<a href="{:U('Banner/edit/',array('id'=>$vo['banner_id']))}">修改</a>
+					|<a href="javascript:void(0)" onclick="return confirmurl('{:U('Banner/del/',array('id'=>$vo['banner_id']))}','确定删除该广告吗？')">删除</a>
+				</td>
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="9" class="pages">
+            {$page}
+          </td>
+        </tr>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+</body>
+	</html>

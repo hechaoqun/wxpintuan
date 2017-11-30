@@ -1,0 +1,154 @@
+<view id="main" hidden="{{!page.load && !page.operate || notNetCon.error == 1 && notNetCon.show == 1 || notServerCon.error == 1 && notServerCon.show == 1 || image_load == 0}}">
+    <view class="container" wx:if="{{banners != 'undefined'}}">
+        <view class="main-view" id="co-focus" >
+            <!--<view class="index_loctaion">
+                <view class="location" bindtap="location">
+                    <view class='i'></view>
+                    <view class='span'>{{address_info}}</view>
+                </view>
+                <view class='location-arrow'>
+                </view>
+            </view>
+            <view class='header' style="margin-bottom: 9.6px;"></view>
+            -->
+            <view class="div tuan" id="tuan">
+                 <view id="channelSlider" class="ch-container div">                   
+                    <!--<view class="ch-left span"></view>
+                    <view class="ch-right span"></view>-->
+                    <scroll-view class="ch-content recommend_scroll_x_box" scroll-x="true" scroll-left="{{nav_scroll_left}}" scroll-with-animation="true">
+                    <!--<view class="ch-content ul">-->
+                        <view class="ch-tab-item li"><view class="{{ current_index == undefine || current_index == -1 ?  'cur-ch-tab' : 'ch-tab'}} span" data-index="-1" data-cate_id="0" catchtap="channelRendered">首页</view></view>
+                        <block wx:key="item" wx:for="{{cates}}">
+                            <view class="ch-tab-item li">
+                                <view class="{{current_index == index ?  'cur-ch-tab' : 'ch-tab'}} span" data-index="{{index}}" data-cate_id="{{item.cate_id}}" catchtap="channelRendered">{{item.cate_name}}</view>
+                            </view>
+                        </block>
+                    <!--</view>-->
+                    </scroll-view>
+                </view>
+
+                  <scroll-view 
+    scroll-top="{{scroll_Top}}"
+    bindscroll="scroll" style="height: {{windowHeight}}px; width: {{windowWidth}}px;" 
+    scroll-y="{{is_scroll}}" bindscrolltoupper="pullUpLoad" bindscrolltolower="pullDown">
+
+                <view id="rp-banner">
+                     <swiper bindchange="bindchange"  indicator-dots="{{indicator-dots}}" indicator-color="#fff" indicator-active-color="#e02e24" 
+                    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style="width:{{banner_img.imageWidth}}px;height:{{banner_img.imageheight}}px;{{ current_index == undefine || current_index == -1 ? '' : 'display:none;'}}" id="slider" circular="true">
+                        <block wx:key="item" wx:for="{{banners}}">
+                            <swiper-item style="width:100%;height:100%;">
+                                <!--<navigator url="{{item.banner_type == '1' && item.target_url && item.target_url != '#' ? item.target_url : ''}}"></navigator>-->
+                                    <image  src="{{item.image_url}}" class=" slide-image" style="width: 100%;height: 100%;" bindload='cusImageLoad'  data-id="banner_img" mode="widthFix" bindtap="bannerDetail" data-index="{{index}}"/>
+                                
+                            </swiper-item>
+                        </block>
+                    </swiper>
+
+                    <view class="ul rp-islider-dot-wrap">
+                        <block wx:key="item" wx:for="{{banners}}" wx:for-index="idx">
+                            <view class="li rp-islider-dot {{current == (idx + 1) ? 'active' : ''}}"></view>
+                        </block>
+                    </view>
+                    
+                </view>
+                
+                
+                    <view class="div clear-both"></view>
+
+                    <view class="for-margin-top"></view>           
+
+                    <block wx:key="item" wx:for="{{goods}}" wx:if="{{current_index == undefine || current_index == -1}}">
+                        <view style="" class="goods_list tuan-new div">
+                            <view class="tuan_g div">
+                                <view class="i"></view>
+                                <navigator hover-class="none" url="./goods?goods_id={{item.goods_id}}">
+                                    <view class="tuan_g_img div">
+                                        <image  data-id="goods_img" class=" loadThumb img" mode="widthFix" src="{{item.image_url}}" data-id="goods_img" style='width:100%;height:100%;'></image> 
+                                    </view>
+                                    
+                                    <view class="tuan_goods_info div">
+                                        <view class="p tuan_goods_name">{{item.goods_name}}</view>
+                                            <view class="p tuan_goods_cx">
+                                                <view class="span"></view>
+                                            </view>
+                                    </view>
+                                
+                                    <view class="tuan_goods_core div">
+                                        <view class="tuan_goods_btn div">
+                                            <view class="span">去开团</view>
+                                        </view>
+
+                                        <view class="tuan_goods_price">
+                                            <view class="red span">
+                                                <view class="small">￥</view>
+                                                <span>{{item.group_price}} </span>
+                                            </view>
+                                            <view class="span group-desc">  {{item.group_number}}人团.单买价{{item.alone_price}}元</view>
+                                        </view>
+                                    </view>
+                                </navigator>
+                            </view>
+                        </view> 
+                    </block>
+
+                    <block wx:if="{{current_index != undefine && current_index != -1}}">
+                        <view id="recommendA" class="div recommendA" hidden="{{goods == '' || goods == undefined}}">
+                            <view class="div recommend" style="display: block;">
+                                <view class="ul">
+                                    <block  wx:key="item" wx:for="{{goods}}">
+                                        <view class="li"  bindtap="bindRedirect" data-url="./goods?goods_id={{item.goods_id}}">
+                                            <view style="{{(index + 1) % 2 == 0 ? 'padding: 10px 0px 20px 0px;' : 'padding: 10px 0px 20px 0px;'}}">
+                                            <view class="div img">
+                                                <image src="{{item.image_url}}" mode="widthFix" class="img " data-id="two_goods_img" /></view>
+                                            <view class="div desc">
+                                                <view class="div text">{{item.goods_name}}</view>
+                                                <view class="div detail">
+                                                    <view class="span price">
+                                                    <view class="small">￥</view>{{item.group_price}}</view> 
+                                                    <view class="span spec">
+                                                    </view></view>
+                                            </view>
+
+                                            </view>
+                                        </view>
+                                    </block>
+                                    <view class="div" style="clear:both"></view>
+                                </view>
+                            </view>
+                        </view>
+
+                        <view style="padding-bottom:20px;"  hidden="{{goods.length > 0}}"></view>
+
+                    </block>
+
+                <view class="div posi_abso" ms-class="up:isloading" wx:if="{{is_over == 0  && page.load == 1  && goods.length > 0}}">
+                    <view class="div center " id="center_pullup">
+                        <view class="span">
+                        <image class="img_rotate" src="data:image/png;base64,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"/></view>
+                        <view class="span orders_text">正在加载中...</view>
+                    </view>
+                </view>
+
+                <view  wx:elif="{{goods.length == 0 && no_data == 1 && page.load ==1}}" class="goods-recommend-bottom">
+                    <view class="goods-recommend-line"></view><view class="p">已经到底部了</view>
+                </view>
+                
+                 <view  wx:elif="{{goods.length > 0 && is_over == 1 && page.load ==1}}" class="goods-recommend-bottom">
+                    <view class="goods-recommend-line"></view><view class="p">已经到底部了</view>
+                </view>
+
+
+                </scroll-view>
+              </view>
+        </view>
+    </view>
+</view>
+
+<view bindtap="goTop" class="div go-top {{goTopClass}}" data-reactid="485"><view class="span" data-reactid="486">顶部</view></view>
+
+<include src="common/footer.wxml"/>
+
+
+<!-- 引入图片预加载组件 -->
+<import src="../utils/img-loader/img-loader.wxml"/>
+<template is="img-loader" data="{{ imgLoadList }}"></template>

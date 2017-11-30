@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>云配置</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidator.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidatorRegex.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+      window.top.art.dialog({content:msg,lock:true,width:250,height:100,ok:function(){$(obj).focus();}});
+    },onsuccess:function(msg,data){var form = $('#myform');$.post(form[0].action, form.serialize(),function(res) {if(!res.status) {window.top.$.thinkbox.error(res.info);return (false);}if(res.status) {window.top.$.thinkbox.success(res.info);setTimeout(function(){window.location.reload();},2000);return (false);}});return false;
+    }});
+
+    $("#bucket").formValidator({onshow:"请输入阿里云 Bucket名称 例如 ：pin",onfocus:"请输入阿里云 Bucket名称 例如 ：pin"}).inputValidator({max:20,onerror:"不能超过20个字符,请确认"});
+    $("#endpoint").formValidator({onshow:"请输入阿里云 EndPoint 例如 ：oss-cn-beijing.aliyuncs.com",onfocus:"请输入阿里云 EndPoint 例如 ：oss-cn-beijing.aliyuncs.com"}).inputValidator({max:50,onerror:"不能超过50个字符,请确认"});
+  });
+</script>
+</head>
+<body>
+<table width="98%" border="0" cellpadding="4" cellspacing="1" class="table">
+<form action="{:U('Config/updatedb')}" method="post" id="myform">
+ <tr  class="table_title">
+  <td colspan="2">云储存设置</td>
+</tr>                   
+<tr class="ji">
+  <td class="left">是否开启阿里云OSS储存服务</td>
+  <td>
+  
+  
+  
+  <select name="con[yun_oss][oss_open]">
+	<option value="1" <equal name="con[yun_oss][oss_open]" value="1">selected</equal>>开启</option>
+	<option value="0" <equal name="con[yun_oss][oss_open]" value="0">selected</equal>>关闭</option>
+  </select>
+  </td>
+</tr>
+<tr class="tr">
+  <td class="left">阿里云Access Key ID</td>
+  <td><input type="text" name="con[yun_oss][access_key_id]" id="access_key_id" size="35"  value="{$con.yun_oss.access_key_id}">
+    <a href="https://www.aliyun.com/product/oss/" target="_blank">一键获取</a>
+  </td>
+</tr>
+<tr class="ji">
+  <td class="left">阿里云Access Key Secret</td>
+  <td><input type="text" name="con[yun_oss][access_key_secret]" id="access_key_secret" size="35"  value="{$con.yun_oss.access_key_secret}">
+  </td>
+</tr>
+<tr class="ji">
+  <td class="left">阿里云 Bucket名称</td>
+  <td><input type="text" name="con[yun_oss][bucket]" id="bucket" size="35" value="{$con.yun_oss.bucket}">
+  </td>
+</tr> 
+
+<tr class="ji">
+  <td class="left">阿里云 EndPoint</td>
+  <td><input type="text" name="con[yun_oss][endpoint]" id="endpoint" size="35"  value="{$con.yun_oss.endpoint}">
+  </td>
+</tr>
+
+<tr class="ji">
+  <td class="left">上传至OSS后是否删除本地原始文件</td>
+  <td>
+  
+  <select name="con[yun_oss][is_delete]">
+	<option value="1" <equal name="con[yun_oss][is_delete]" value="1">selected</equal>>删除</option>
+	<option value="0" <equal name="con[yun_oss][is_delete]" value="0">selected</equal>>保留</option>
+  </select>
+  </td>
+</tr>                                   
+<tr class="ji">
+  <td colspan="2">
+    <input class="bginput" type="button" name="dosubmit" value="提交" onClick="submit_confirm('myform', '请仔细检查后再提交，不正确的参数都将可能导致网站不能正常运行！', 250,100)">
+    <input class="bginput" type="reset" name="Input" value="重置" >
+  </td>
+</tr>
+</form>
+</table>
+<include file="Index:footer" />
+</body>
+</html>

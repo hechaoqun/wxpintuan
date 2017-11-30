@@ -1,0 +1,6 @@
+{
+    "enablePullDownRefresh": false,
+    "navigationBarTitleText" : "我的拼团",
+    "navigationBarBackgroundColor" : "#fff",
+    "navigationBarTextStyle": "black"
+}

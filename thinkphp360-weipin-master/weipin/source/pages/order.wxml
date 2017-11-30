@@ -1,0 +1,129 @@
+<view class="body" ms-controller="root" hidden="{{!page.load && !page.operate || notNetCon.error == 1 && notNetCon.show == 1 || notServerCon.error == 1}}">
+    
+    <include src="common/express.wxml"/>
+
+     <view class=" div mod_container" ms-class=" exp_overflow:!express_hide">
+         <view id="detailCon" class="div wx_wrap" ms-visible="order.order_id != undefined">
+             <!-- ms-class="state_1: order.total_status == 2" ms-class-1="state_2: order.total_status == 3" ms-class-2="state_3: order.total_status == 4"-->
+             <view class="div state {{order.state_class}}">
+                 <view class="div state_step" >
+                    <view class="ul">
+                         <view class="li state_step_1 "> </view>
+                         <view class="li state_step_2"> </view>
+                         <view class="li state_step_3"> </view>
+                     </view>
+                     <view class="span state_arrow">
+                 <view class="i state_arrow_i"> </view>
+                 <view class="i state_arrow_o"> </view>
+                 </view>
+                 </view>
+                 <view class="div address">
+                     <view class="div address_row" ms-if="order.lucky_status == '3' || order.lucky_status == '0' || order.pay_status != 2 || order.order_status != 1">
+                         <view class="div address_tit">订单状态： </view>
+                         <view class="div address_cnt">
+                            <view class="b">{{order.order_status_lang}}</view>
+                         </view>
+                     </view>
+                     <view class="div address_row">
+                         <view class="div address_tit">总 额： </view>
+                         <view class="div address_cnt">
+                             <view class="span address_price">{{order.order_amount}} </view>
+                             <view class="span address_paytype">{{payment_provider}} </view>
+                         </view>
+                     </view>
+                     <view class="div address_row">
+                         <view class="div address_tit">送 至： </view>
+                         <view class="div address_cnt">{{order.shipping_address}} </view>
+                     </view>
+                     <view class="div address_row">
+                         <view class="div address_tit">收 货 人： </view>
+                         <view class="div address_cnt">{{order.receive_name + ' ' + order.mobile}} </view>
+                     </view>
+                     <view class="div address_row">
+                         <view class="div address_tit">订单编号： </view>
+                         <view class="div address_cnt" id="canselect">{{order.order_sn}} </view>
+                     </view>
+                     <view class="div address_row">
+                         <view class="div address_tit">下单时间： </view>
+                         <view class="div address_cnt">{{order.order_time}} </view>
+                     </view>
+                     <!--<view class="div address_row" ms-if="coupons.length>0">
+                         <view class="div address_tit">优惠信息： </view>
+                         <view class="div address_cnt posi_rela"> <view class="span">{{coupons[0].event_desc}} </view>
+                         <view class="span coupon_icon_order" ms-if="order.coupons.length>0"> </view> </view>
+                     </view>-->
+                     <view class="div address_row" ms-visible="order.shipping_status>=1">
+                         <view class="div address_tit">配送方式： </view>
+                         <view class="div address_cnt">{{order.shipping_name}}
+                            <view class="br"></view>{{order.tracking_number}} </view>
+                     </view>
+
+                     <!--<view class="div address_row" ms-if = "order.pay_status == 2 && order.order_status == 1 && lucky_status != '0'">
+                         <view class="div address_tit">抽奖状态： </view>
+                         <view class="div address_cnt" style="color:#1aad19;font-weight: bold">{{getPrize()}} </view>
+                     </view>-->
+
+                 </view>
+                 <view class="div state_btn" hidden="{{!(order.order_status==0)}}">
+                     <view class="a state_btn_1" href=""
+                       ms-click="orderCancel(order.order_id)" data-order_id="{{order.order_id}}" bindtap="orderCancel">取消订单 </view>
+                     <view class="a state_btn_2" href=""
+                       ms-click="orderBuy(order.order_id)" bindtap="orderBuy" data-order_id="{{order.order_id}}" id="btn_order_done">去支付 </view>
+                 </view>
+                <!--  <view class = "state_btn" ms-visible = "order.total_status == 1 || order.total_status == 2">
+                     <view class="state_btn_2" href="">售货服务 </view>
+                 </view> -->
+                 <view class="div state_btn" hidden="{{!(order.order_status==10 || order.order_status==3)}}">
+                     <view class="a state_btn_1" hidden="{{!(order.order_status==10 || order.order_status==3)}}" ms-click="expressShow"  bindtap ="expressShow" data-order_id="{{order.order_id}}">查看物流 </view>
+                     <view class="a state_btn_3" data-order_id="{{order.order_id}}" bindtap ="orderReceive" hidden="{{!(order.order_status==3)}}" ms-click="orderReceive(order.order_id)">确认收货 </view>
+                 </view>
+                 <view class="div state_btn">  </view>
+             </view>
+             <view class="div ptit">商品信息
+             </view>
+             <view class="div order order_height">
+                 <view class="div order_bd">
+                     <view class="div order_glist">
+                         <navigator  url="goods?goods_id={{order.order_goods.goods_id}}">
+                         <view class="div order_item">
+                             <view href="" class="a order_goods" style="float:left;border-bottom:none;">
+                                 <view class="div order_goods_img">
+                                    <image class="img" src="{{order.order_goods.image_url}}"></image>
+                                 </view>
+                             </view>
+                             <view class="div order_goods_info">
+                                 <view class="a order_goods" ms-click="showGoods(item.goods_target, item.goods_id)">
+                                     <view class="div order_goods_name">{{order.order_goods.goods_name}}  </view>
+                                     <view class="div order_goods_attr">
+                                        <view class="br"></view>
+                                         <view class="div order_goods_attr_item">
+                                             <view class="div order_goods_price"> <view class="i">￥ </view>{{order.order_goods.market_price}}
+                                             <!--<view ms-if="specDesc" class="i">/{{specDesc}} </view> </view>-->
+                                         </view>
+                                     </view>
+                                 </view>
+                             </view>
+                         </view>
+                        </view>
+                      </navigator>
+                     <!--<view class="div" ms-if="group_target != 'group_li.html' && order.pay_status != 0">
+                         <view class ="a mt_status_lk marg_right" ms-href="{{group_target}}?id={{order.group_order_id}}" ms-if="isShowGroupDetail">查看团详情 </view>
+                     </view>-->
+                     <view class="div" wx:if="{{order.group_order_id != 0 && order.pay_status != 0}}">
+                        <navigator url="group?id={{order.group_order_id}}&order_id={{order.order_id}}" >
+                            <view class ="a mt_status_lk marg_right" ms-href="{{group_target}}?id={{order.group_order_id}}&order_id={{order.order_id}}" ms-if="isShowGroupDetail">查看团详情 </view>
+                         </navigator>
+                     </view>
+                 </view>
+             </view>
+         </view>
+        <view class="i service explain_icon_right" style="display: block;top: 325px;" onclick="common.showService()">
+             <contact-button 
+                type="default-light" 
+                size="27">
+            </contact-button>  
+        </view>
+     </view>
+    </view>
+    </view>
+   <include src="common/footer.wxml"/>

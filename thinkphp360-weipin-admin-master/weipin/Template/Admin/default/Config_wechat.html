@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>云配置</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidator.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidatorRegex.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+      window.top.art.dialog({content:msg,lock:true,width:250,height:100,ok:function(){$(obj).focus();}});
+    },onsuccess:function(msg,data){var form = $('#myform');$.post(form[0].action, form.serialize(),function(res) {if(!res.status) {window.top.$.thinkbox.error(res.info);return (false);}if(res.status) {window.top.$.thinkbox.success(res.info);setTimeout(function(){window.location.reload();},2000);return (false);}});return false;
+    }});
+
+    $("#ssl_cert").formValidator({onshow:"请先上传微信支付证书到项目根目录/Public/cert/ 并填写SSL证书路径 例如linux ：/phpstudy/www/Public/cert/apiclient_cert.pem",onfocus:"请先上传微信支付证书到项目根目录/Public/cert/ 并填写SSL证书路径 例如linux ：/phpstudy/www/Public/cert/apiclient_cert.pem"}).inputValidator({max:880,onerror:"不能超过880个字符,请确认"});
+    $("#ssl_key").formValidator({onshow:"请先上传微信支付证书到项目根目录/Public/cert/ 并填写微信支付SSLKEY证书 例如linux ：/phpstudy/www/Public/cert/apiclient_key.pem",onfocus:"请先上传微信支付证书到项目根目录/Public/cert/ 并填写微信支付SSLKEY证书 例如linux ：/phpstudy/www/Public/cert/apiclient_key.pem"}).inputValidator({max:880,onerror:"不能超过880个字符,请确认"});
+  });
+</script>
+</head>
+<body>
+<table width="98%" border="0" cellpadding="4" cellspacing="1" class="table">
+<form action="{:U('Config/updatedb')}" method="post" id="myform">
+
+<tr  class="table_title">
+  <td colspan="2">微信小程序设置</td>
+</tr>                   
+
+<tr class="tr">
+  <td class="left">小程序appid</td>
+  <td><input type="text" name="con[weapp][appid]" id="appid" size="35"  value="{$con.weapp.appid}">
+    <a href="https://mp.weixin.qq.com" target="_blank">一键获取</a>
+  </td>
+</tr>
+
+<tr class="tr">
+  <td class="left">小程序appsecret</td>
+  <td><input type="text" name="con[weapp][appsecret]" id="appsecret" size="35"  value="{$con.weapp.appsecret}">
+  </td>
+</tr>
+
+<tr class="tr">
+  <td class="left">微信注册默认用户名前缀</td>
+  <td><input type="text" name="con[weapp][nick_pre]" id="nick_pre" size="35"  value="{$con.weapp.nick_pre}">
+  </td>
+</tr>
+
+<tr class="tr">
+  <td class="left">微信注册默认头像</td>
+  <td><input type="text" name="con[weapp][headimgurl]" id="headimgurl" size="35" value="{$con.weapp.headimgurl}">
+  </td>
+</tr>
+
+
+<tr class="tr">
+  <td class="left">微信支付商户号</td>
+  <td><input type="text" name="con[weapp][mchid]" id="mchid" size="35" value="{$con.weapp.mchid}">
+  </td>
+</tr>
+
+<tr class="tr">
+  <td class="left">微信支付密钥</td>
+  <td><input type="text" name="con[weapp][key]" id="key" size="35" value="{$con.weapp.key}">
+  </td>
+</tr>
+
+<tr class="tr">
+  <td class="left">微信支付SSL证书路径</td>
+  <td><input type="text" name="con[weapp][ssl_cert]" id="ssl_cert" size="35" value="{$con.weapp.ssl_cert}">
+  </td>
+</tr>
+
+<tr class="tr">
+  <td class="left">微信支付SSLKEY证书</td>
+  <td><input type="text" name="con[weapp][ssl_key]" id="ssl_key" size="35" value="{$con.weapp.ssl_key}">
+  </td>
+</tr>
+
+<tr class="ji">
+  <td colspan="2">
+    <input class="bginput" type="button" name="dosubmit" value="提交" onClick="submit_confirm('myform', '请仔细检查后再提交，不正确的参数都将可能导致网站不能正常运行！', 250,100)">
+    <input class="bginput" type="reset" name="Input" value="重置" >
+  </td>
+</tr>
+</form>
+</table>
+<include file="Index:footer" />
+</body>
+</html>

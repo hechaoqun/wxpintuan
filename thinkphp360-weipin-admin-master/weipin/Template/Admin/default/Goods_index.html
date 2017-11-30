@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="9" class="table_title">
+				<span class="fl">物品管理</span>
+				<span class="fr">
+					<a href="{:U('Goods/add')}">添加物品</a>
+				</span>
+			</td>
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td >物品名称</td>
+				<td width="70">市场价格</td>
+				<td width="70">团购价格</td>
+				<td width="70">团购人数</td>
+				<td width="70">商品库存</td>
+				<td width="70">添加时间</td>
+				<td width="70">上架状态</td>
+				<td width="100">管理操作</td>
+			</tr>
+	    <volist name="list" id="vo">
+			<tr class='tr'>
+				<td align='center'>{$vo.goods_id}</td>
+				<td >{$vo.goods_name}</td>
+				
+				<td align='center'>{$vo.market_price}</td>
+				<td align='center'>{$vo.group_price}</td>
+				<td align='center'>{$vo.group_number}</td>
+				<td align='center'>{$vo.goods_stock}</td>
+				<td align='center'>{:get_color_date('Y-m-d H:i:s', $vo['time'])}</td>
+				
+				<td align='center'><eq name="vo.in_selling" value="1"><font color="red">√</font><else/><font color="blue">×</font></eq> </td>
+				
+				<td align='center'>
+					<a href="javascript:details_goods({$vo['goods_id']},'{$vo.goods_name}')">查看</a>
+					|<a href="{:U('Goods/edit/',array('id'=>$vo['goods_id']))}">修改</a>
+					|<a href="javascript:void(0)" onclick="return confirmurl('{:U('Goods/del/',array('id'=>$vo['goods_id']))}','确定删除该商品吗？')">删除</a>
+				</td>
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="9" class="pages">
+            {$page}
+          </td>
+        </tr>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+</body>
+<script type="text/javascript">
+	//查看商品
+	function details_goods(id, name) {
+		name = name.substr(0,20) +  '...';
+		window.top.art.dialog.open('{:U('Goods/get/')}'+'&id='+id,{title: name, width: 430, height: 430});
+	}
+</script>
+	</html>

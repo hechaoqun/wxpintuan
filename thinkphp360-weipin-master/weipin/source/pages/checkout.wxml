@@ -1,0 +1,169 @@
+<view class="body" avalonctrl="order" hidden="{{!page.load && !page.operate || notNetCon.error == 1 && notNetCon.show == 1}}">
+    <view class="div" style="display: block;">
+        <view class="div wx_wrap">
+            <!--ms-if-->
+            <view bindtap="redirectAddresses" hover-class="none">
+                <view class="a send_address">
+                    
+                    <view class="div" id="sendTo">
+                        <view class="div address address_defalut" style="{{address ? '' : 'display: none;'}}">
+                        <view class="div address_name_order">
+                            <view class="span">{{address.address_name == "WORK" ? "公司" : "家庭"}}</view><!--ms-if-->
+                        </view>
+                        
+                        <view class="h3">
+                            <view class="b send_margin">送至</view>
+                            <view class="br"></view><!--ms-if-->
+                        </view>
+                            
+                            <view id="editAddBtn" adid="4" class="ul">
+                                <view class="li">
+                                    <view class="strong">{{address.receive_name}}</view>
+                                    {{address.mobile}}
+                                </view>
+                                <view class="li">{{address.address}}</view>
+                            </view>
+                        </view>
+                        
+                        <view class="div address_new" style="display: none;">
+                            <view class="h4 lou_userinfo">本人信息: <view class="strong name_lou">{{address.mobile}}&nbsp;&nbsp;{{address.mobile}}</view></view>
+                        </view>
+
+                        <view class="div address text_center" style="{{!address ? '' : 'display: none;'}}">
+                            <view class="span"> <view class="strong">您还没有收货地址哦,点击新增地址</view></view>
+                        </view>
+                    </view>
+                </view>
+             </view>
+            <view class="div order">
+                <view class="div order_bd">
+                    <view id="orderList" class="div order_glist">
+                        <view class="div only">
+                            <view class="div order_goods">
+                                <view class="div order_goods_img">
+                                    <image class="img" alt="" src="{{goods.image_url}}" />
+                                </view>
+                                <view class="div order_goods_info">
+                                    <view class="div order_goods_name"><view id="tuanLbl"></view>{{goods.goods_name}}</view>
+                                    <view class="div order_goods_attr">
+                                        <view class="div order_goods_attr_item">
+                                            <view id="goodsPrice" class="div order_goods_price2">
+                                                <view class="i">￥</view>
+                                                    <block wx:if="{{sell_type == 1}}">{{goods.group_price}}</block>
+                                                    <block wx:else>{{goods.alone_price}}</block>
+                                                <view class="i" style="display:none;">/8个 </view>
+                                            </view>
+                                        </view>
+                                        <view class="p order_goods_attr_item"><view id="skuLast" class="span"></view><view class="i"></view></view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="div" id="pay_area" style="opacity: 1;">
+                <view class="div total">快递：<view class="small">￥</view>0.00 总价：<view id="totalPrice" class="span total_price"><view class="i">￥</view>
+                    <block wx:if="{{sell_type == 1}}">{{goods.group_price}}</block>
+                    <block wx:else>{{goods.alone_price}}</block></view></view>
+                <view class="pay2 div ">
+                    <view class="div pay2_hd">请选择支付方式</view>
+                    <view id="payList" class="div pay2_list">
+                        <view id="goTenPay" class="div pay2_item pay2_wx pay2_selected">
+                            <view class="span pay2_item_state"></view>
+                            <view class="span pay2_item_ico"></view>
+                            <view class="span pay2_item_tit">微信支付</view>
+                        </view>
+                    </view>
+                    <!--ms-if-->
+                    <!--ms-if-->
+                    <!--ms-if-->
+                    <form name="theForm" id="theForm" class="form" report-submit="true" bindsubmit="btnOrderDone">
+                        <view>  
+                             <button formType="submit" class="pay2_btn" loading="{{btn_order_done ? true : false}}"  id="btn_order_done" style="{{btn_order_done || !address ? 'opacity: 0.4;' : ''}}" >
+                                 <block wx:if="{{btn_order_done}}">正在支付 请稍候</block>
+                                 <block wx:elif="{{cancel_pay}}">继续支付</block>
+                                 <block wx:else>立即支付</block>
+                             </button>
+                        </view>
+                    </form>
+                </view>
+            </view>
+        </view>
+        <view class="div step">
+            <view class="div step_hd">
+                拼团玩法
+                <view class="a step_more" href="tuan_rule.html" bindtap="show_group_desc">查看详情</view>
+            </view>
+
+            <view id="footItem" class="div step_list">
+                <view class="div step_item">
+                    <view class="div step_num">1</view>
+                    <view class="div step_detail">
+                        <view class="p step_tit">选择
+                           <view  class="br">心仪商品</view>
+                    </view>
+                </view>
+              </view>
+
+                <view class="div step_item step_item_on">
+                    <view class="div step_num">2</view>
+                    <view class="div step_detail">
+                        <view class="p step_tit">支付开团
+                           <view  class="br">或参团</view>
+                    </view>
+                </view></view>
+
+                <view class="div step_item">
+                    <view class="div step_num">3</view>
+                    <view class="div step_detail">
+                        <view class="p step_tit">邀请好友
+                           <view  class="br">参团支付</view>
+                    </view>
+                </view></view>
+
+                <view class="div step_item">
+                    <view class="div step_num">4</view>
+                    <view class="div step_detail">
+                        <view class="p step_tit">达到人数
+                           <view  class="br">团购成功</view>
+                    </view>
+                </view></view>
+            </view>
+        </view>
+    </view>
+    
+    <view class="div widget slide_widget_tip {{!order_tixinged && shippingBanner.open == '1' ? 'slide_tip' : ''}}" bindtap="order_tixinged" hidden="{{!goods}}">
+        <view class="div title">
+        <view class="p">温馨提示</view>
+        </view>
+        <view class="div content">
+            <view class="p">
+                {{shippingBanner.desc}}
+            </view>
+        </view>
+    </view>
+
+    <view class="section modaled" hidden="{{order_tixinged || shippingBanner.open == '0'}}"></view>
+</view>
+
+<view class="group-detail" hidden="{{!show_group_desc}}" bindtap="close_group_desc">
+<view class="div group-detail-notice-container" style="display:;" data-reactid="71">
+<view class="div notice-pop-container" data-reactid="82" catchtouchmove="stop">
+    <view  data-reactroot="" class="div notice-pop">
+        <view class="div mask"></view>
+        <view class="div notice-pop-content">
+            <view class="div notice-pop-title">如何参加拼团</view>
+            <view class="ul notice-pop-list">
+                <view class="li join">开团或参加别人的团</view>
+                <view class="li time">在规定的时间内，邀请好友参团</view>
+                <view class="li send">达到拼团人数，分别给团长和团员发货</view>
+                <view class="li withdraw">未达到拼团人数，货款将自动原路返还</view>
+            </view>
+        </view>
+    </view>
+</view>
+</view>
+</view>
+
+<include src="common/footer.wxml"/>

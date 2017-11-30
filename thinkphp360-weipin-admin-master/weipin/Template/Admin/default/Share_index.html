@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="8" class="table_title">
+				<span class="fl">分享管理</span>
+				<span class="fr">
+					
+				</span>
+			</td>
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td >用户头像</td>
+				<td >用户名</td>
+				<td >wechat_id</td>
+				<td >分享类型</td>
+				<td >分享状态</td>
+				<td >分享时间</td>
+				<td >分享链接</td>
+				
+			</tr>
+	    <volist name="list" id="vo">
+			<tr class='tr'>
+				<td align='center'>{$vo.share_id}</td>
+				<td align='center'><img src="{$vo.headimgurl}" height="20" width="20" alt="" /></td>
+				
+				<td align='center'>{$vo.nickname}</td>
+				<td align='center'>{$vo.open_id}</td>
+				<td align='center'>{$vo.share_type}</td>
+				<td align='center'><eq name="vo.share_status" value="1"><font color="red">成功</font><else/><font color="blue">取消</font></eq></td>
+				<td align='center'>{$vo.share_time|date='Y-m-d H:i:s',###}</td>
+				<td align='center'>{$vo.share_url}</td>
+				
+
+				
+
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="8" class="pages">
+            {$page}
+          </td>
+        </tr>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+</body>
+	</html>

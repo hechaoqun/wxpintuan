@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$tpltitle}后台用户</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/formValidator.js"></script>
+
+<link rel="stylesheet" href="__PUBLIC__/vendor/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="__PUBLIC__/vendor/kindeditor/kindeditor-all-min.js"></script>
+
+
+<script charset="utf-8" src="__PUBLIC__/vendor/datepicker/WdatePicker.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+			window.top.art.dialog({content:msg,lock:true,width:250,height:100,ok:function(){$(obj).focus();}});
+		},onsuccess:function(msg,data){$(".input").attr("disabled","disabled");var form = $('#myform');$.post(form[0].action, form.serialize(),function(res) {if(!res.status) {$(".input").removeAttr("disabled");window.top.$.thinkbox.error(res.info);return (false);}if(res.status) {window.top.$.thinkbox.success(res.info);setTimeout(function(){if(res.url != undefined && res.url) {window.location = res.url;} else {window.location.reload();}},2000);return (false);}});return false;
+		}});
+
+
+		$('#banner_name').formValidator({onshow:"请输入banner名称",onfocus:"请输入banner名称"}).inputValidator({min:1,onerror:"banner名称必须填"});
+		
+		
+		
+	});
+</script>
+
+
+
+</head>
+<body>
+		<gt name="info.banner_id" value="0">
+			<form action="{:U('Banner/edit')}" method="post" name="form" id="myform">
+			<input type="hidden" name="banner_id" value="{$info.banner_id}">
+		<else />
+			<form action="{:U('Banner/add')}" method="post" name="form" id="myform">
+		</gt>
+			<table width="98%" border="0" cellpadding="4" cellspacing="1" class="table">
+
+				<tr class="table_title">
+					<td colspan="4">{$tpltitle}Banner管理</td>
+				</tr>
+				
+
+				<tr class="tr rt">
+					<td >banner名称：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="banner_name" id="banner_name" style="width:400px" value="{$info.banner_name}">
+					</td>
+				</tr>
+
+				<tr class="tr rt">
+					<td >开启链接：</td>
+					<td colspan="3" class="lt">
+						<select name="banner_type" id="banner_type">
+							<option value="1" <eq name="info[banner_type]" value="1">selected</eq> >是</option>
+							<option value="0" <eq name="info[banner_type]" value="0">selected</eq>>否</option>
+						</select>						
+					</td>
+				</tr>
+				
+
+				<tr class="tr rt">
+					<td >banner图片：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="image_url" id="image_url" style="width:400px" value="{$info.image_url}">
+						<a href="javascript:void(0)" id="upImageBtn">上传图片</a>
+					</td>
+				</tr>
+				
+				
+
+				<tr class="tr rt">
+					<td >链接地址：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="target_url" id="target_url" style="width:400px" value="{$info.target_url}">
+					</td>
+				</tr>
+
+
+				<tr class="tr rt">
+					<td >开始时间：</td>
+					<td colspan="3" class="lt">
+						
+						<input id="start_time" name="start_time" type="text" onClick="WdatePicker()" value="{$info.start_time|date='Y-m-d',###}" />
+
+						
+					</td>
+				</tr>
+
+				<tr class="tr rt">
+					<td >结束时间：</td>
+					<td colspan="3" class="lt">
+						<input id="end_time" name="end_time" type="text" onClick="WdatePicker()" value="{$info.end_time|date='Y-m-d',###}" />
+					</td>
+				</tr>
+
+
+				<tr class="tr rt">
+					<td >排序：</td>
+					<td colspan="3" class="lt">
+						<input type="text" name="banner_sort" id="banner_sort" style="width:100px" value="{$info.banner_sort|default=0}">
+					</td>
+				</tr>
+				
+				
+				
+				
+				
+
+
+	<tr class="tr lt">
+		<td colspan="4">
+			<input type="hidden" name="dosubmit"/>
+			<gt name="info.banner_id" value="0">
+				<input class="bginput" type="submit" value="修 改" >
+				<else />
+				<input class="bginput" type="submit" value="添 加"></gt>
+			&nbsp;
+			<input class="bginput" type="button" onclick="javascript:history.back(-1);" value="返 回" ></td>
+	</tr>
+</table>
+</form>
+<include file="Index:footer" />
+           
+<script>
+        
+		
+		KindEditor.ready(function(K) {
+			var editor1 = K.editor({
+				uploadJson : "{:U('Api/File/uploadFile')}",
+				afterBlur: function () { this.sync(); },
+				urlType : "domain"
+			});
+			
+			K('#upImageBtn').click(function(){
+				editor1.loadPlugin('image', function() {
+						editor1.plugin.imageDialog({
+							imageUrl : K('#image_url').val(),
+							clickFn : function(url, title, width, height, border, align) {
+								if(!/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(url))
+									K('#image_url').val("{:RTRIM(C('web_url'),'/')}" + url);
+								else
+									K('#image_url').val(url);
+								editor1.hideDialog();
+							}
+						});
+					});
+			});
+			
+			
+			
+			
+		});
+
+		
+		
+		
+		
+</script>
+
+</body>
+</html>

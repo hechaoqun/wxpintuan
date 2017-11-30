@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/vendor/datepicker/WdatePicker.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="11" class="table_title">
+				<span class="fl">订单管理</span>
+				<span class="fr">
+					<!--<a href="{:U('Goods/add')}">添加物品</a>-->
+				</span>
+
+			</td>
+			</tr>
+			<tr>
+				
+				<td colspan="11" class="table_title" >
+					<form name="searchForm" id="searchForm" action="">
+					<input type="hidden" name="g" value="Admin" />
+					<input type="hidden" name="m" value="Orders" />
+					<input type="hidden" name="a" value="index" />
+				    
+				    订单号<input name="search[order_sn]" type="text" id="order_sn" size="25" value="{$_GET['search']['order_sn']}">
+				    收货人<input name="search[receive_name]" type="text" id="receive_name" size="10" value="{$_GET['search']['receive_name']}">
+				    
+				    商品编号<input name="search[goods_id]" type="text" id="goods_id" size="15" value="{$_GET['search']['goods_id']}">
+					订单状态
+					<select name="search[order_status]" id="order_status">
+      <option value="-1" <eq name="_GET.search.order_status" value="-1">selected</eq>>全部订单</option>
+      <option value="0" <eq name="_GET.search.order_status" value="0">selected</eq>>待支付</option>
+      <option value="1" <eq name="_GET.search.order_status" value="1">selected</eq>>已支付，未确认</option>
+      <option value="2" <eq name="_GET.search.order_status" value="2">selected</eq>>已确认，待发货</option>
+      <option value="3" <eq name="_GET.search.order_status" value="3">selected</eq>>配送中</option>
+      <option value="4" <eq name="_GET.search.order_status" value="4">selected</eq>>已签收</option>
+      <option value="5" <eq name="_GET.search.order_status" value="5">selected</eq>>交易已取消</option>
+
+      <option value="6" <eq name="_GET.search.order_status" value="6">selected</eq>>未发货退款处理中</option>
+      <option value="7" <eq name="_GET.search.order_status" value="7">selected</eq>>未发货退款成功</option>
+		<option value="8" <eq name="_GET.search.order_status" value="8">selected</eq>>已发货退款处理中</option>
+		<option value="9" <eq name="_GET.search.order_status" value="9">selected</eq>>已发货退款成功</option>
+		<option value="999" <eq name="_GET.search.order_status" value="999">selected</eq>>未确认与待发货</option>
+          </select>
+
+          		
+
+    			下单时间
+    			<input id="start_time" name="search[start_time]" type="text" onClick="WdatePicker({dateFmt:'yyyy-M-d HH:mm'})" value="{$_GET['search']['start_time']}" />~
+    			<input id="end_time" name="search[end_time]" type="text" onClick="WdatePicker({dateFmt:'yyyy-M-d HH:mm'})" value="{$_GET['search']['end_time']}" />
+			    </br>
+			    购买类型
+          		<select name="search[group_buy]" id="group_buy">
+      <option value="-1" <eq name="_GET.search.group_buy" value="-1">selected</eq>>全部</option>
+      <option value="1" <eq name="_GET.search.group_buy" value="1">selected</eq>>团购购买</option>
+      <option value="0" <eq name="_GET.search.group_buy" value="0">selected</eq>>单独购买</option>
+    </select>
+				团购状态
+          		<select name="search[status]" id="status">
+          		 <option value="-1" <eq name="_GET.search.status" value="-1">selected</eq>>全部</option>
+      <option value="0" <eq name="_GET.search.status" value="0">selected</eq>>团购进行中</option>
+      <option value="1" <eq name="_GET.search.status" value="1">selected</eq>>团购成功</option>
+      <option value="2" <eq name="_GET.search.status" value="2">selected</eq>>团购失败</option>
+    </select>
+
+
+				      </br>
+				    <input type="submit" value=" 搜索 " class="button" />
+					<input type="button" id="export" value=" 导出 " class="button" />
+				  </form>
+
+				</td>
+
+			</tr>
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td >订单编号</td>
+				<td >物品名称</td>
+				<td >购买用户</td>
+				<td >订单金额</td>
+				<td >实付金额</td>
+				<td >订单类型</td>
+				<td >下单时间</td>
+				<td >支付时间</td>
+				<td>订单状态</td>
+				<td>管理操作</td>
+			</tr>
+	    <volist name="list" id="vo">
+			<tr class='tr'>
+				<td align='center'>{$vo.order_id}</td>
+				<td >{$vo.order_sn}</td>
+				<td >{$vo.order_goods|getGoodsField='goods_name',###}</td>
+				<td >{$vo.nickname}</td>
+				<td align='center'>{$vo.order_amount}元</td>
+				<td align='center'>{$vo.pay_amount}元</td>
+				<td align='center'>
+					<eq name="vo.group_buy" value="1">
+					团购
+					<eq name="vo.group_header" value="1">
+					（团长）
+					<eq name="vo.order_group_order_id" value="0">
+					（未成团）<else/>
+					（已成团）</eq>
+					<else/>(参团)
+					</eq><else/>个人购买</eq>
+				</td>
+				<td align='center'>{$vo.order_time|date='Y-m-d H:i:s',###}</td>
+				<td align='center'>
+					<neq name="vo.pay_time" value="0">
+						{$vo.pay_time|date='Y-m-d H:i:s',###}
+						<else/>
+						无
+					</neq>
+					
+				</td>
+				<td align='center'>
+					
+					<switch name="vo.order_status">
+					    <case value="0">待支付</case>
+					    <case value="1">已支付，未确认</case>
+					    <case value="2">已确认，待发货</case>
+					    <case value="3">配送中</case>
+					    <case value="4">已签收</case>
+					    <case value="5">交易已取消</case>
+					    <case value="6">未发货退款处理中</case>
+					    <case value="7">未发货退款成功</case>
+					    <case value="8">已发货退款处理中</case>
+					    <case value="9">已发货退款成功</case>
+					    
+					    <default />default
+					 </switch>
+					 <if condition="$vo['order_status'] != 0 && $vo['order_status'] != 5">
+					 （<eq name="vo.group_buy" value="1">
+					 团购 
+					<if condition="$vo['status'] == 0 ">进行中
+						<elseif condition="$vo['status'] == 1"/><span style="color:green;">成功</span>
+					    <else /> <span style="color:red;">失败</span>
+					</if>
+
+					 <else/>个人</eq>）
+					 </if>
+				</td>
+				
+				<td align='center'>
+					<a href="{:U('Orders/edit/',array('id'=>$vo['order_id']))}">查看</a>
+					<!-- |<a href="javascript:void(0)" onclick="return confirmurl('{:U('Goods/del/',array('id'=>$vo['goods_id']))}','确定删除该商品吗？')">删除</a> -->
+				</td>
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="11" class="pages">
+            {$page}
+          </td>
+        </tr>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+<script>
+	$('#export').click(function(){
+		location.href = '?' + $('#searchForm').serialize() + '&export=1';
+
+	});
+</script>
+</body>
+	</html>

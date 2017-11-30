@@ -1,0 +1,78 @@
+<?php
+return array (
+  'db_type' => 'mysql',
+  'db_host' => 'skzrhr53.2317lan.dnstoo.com',
+  'db_name' => 'fandd',
+  'db_user' => 'fandd_f',
+  'db_pwd' => 'w3rgakbd',
+  'db_port' => 0,
+  'db_prefix' => 'tp_',
+  'web_name' => '拼',
+  'web_url' => 'https://www.fanduoduo2017.top/',
+  'web_path' => '/',
+  'web_icp' => '浙ICP备888888号',
+  'CRON_MAX_TIME' => 60,
+  'web_copyright' => '版权所有 © 浙江微拼网络股份有限公司 2017 - 2022',
+  'web_tongji' => '',
+  'web_admin_pagenum' => 20,
+  'web_home_pagenum' => 15,
+  'web_adsensepath' => 'Public/Banner',
+  'upload_config' => 
+  array (
+    'allowExts' => 
+    array (
+      0 => 'jpg',
+      1 => 'gif',
+      2 => 'png',
+      3 => 'jpeg',
+    ),
+    'maxSize' => 3145728,
+    'savePath' => './Uploads/',
+    'autoSub' => true,
+    'subType' => 'date',
+  ),
+  'yun_oss' => 
+  array (
+    'oss_open' => '0',
+    'access_key_id' => '',
+    'access_key_secret' => '',
+    'bucket' => '',
+    'endpoint' => '',
+    'is_delete' => '1',
+  ),
+  'group' => 
+  array (
+    'notify_hour' => '5',
+    'expire_time' => '24',
+  ),
+  'weapp' => 
+  array (
+    'appid' => '',
+    'appsecret' => '',
+    'nick_pre' => '',
+    'headimgurl' => '',
+    'mchid' => '',
+    'key' => '',
+    'ssl_cert' => '',
+    'ssl_key' => '',
+  ),
+  'weapp_tpl' => 
+  array (
+    'open' => '0',
+    'pay_notify_tpl' => '',
+    'shipping_notify_tpl' => '',
+    'refound_notify_tpl' => '',
+    'group_notify_tpl' => '',
+  ),
+  'shipping_banner' => 
+  array (
+    'open' => '1',
+    'desc' => '由于双十一原因，11月10日14:00之后成团的订单统一于11月16日开始发货（零食玩具类订单除外）。期间可照常下单哦~天气凉了，多注意保暖~',
+  ),
+  'export' => 
+  array (
+    'order_field' => 'order_id,order_sn,order_goods.goods_name,order_status,receive_name,mobile,shipping_address,',
+    'order_field_name' => '订单ID,订单编号,物品名称,订单状态,收货人,收货号码,收货地址,',
+  ),
+);
+?>

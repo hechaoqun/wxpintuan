@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/vendor/datepicker/WdatePicker.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<style>
+	.ttr{background: #fff;}
+	.ttr .tdt{font-weight: bold;}
+</style>
+<body>
+		<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="2" class="table_title">
+				<span class="fl">团购信息</span>
+				<span class="fr">
+					<a href="{:U('Group/index')}">团列表</a>
+				</span>
+
+			</td>
+		</tr>
+		
+		<tr class="list_head ct">
+			<td colspan="2">基本信息</td>
+		</tr>
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				团ID：
+			</span>
+				{$group.group_order_id}
+
+			</td>
+			<td>
+				<span class="tdt">
+					团状态：
+				</span>
+				<switch name="group.status">
+					    <case value="0">进行中</case>
+					    <case value="1">拼团成功</case>
+					    <case value="2">拼团失败</case>
+				</switch>
+			</td>
+		</tr>
+
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				团长：
+			</span>
+				{$order[0].nickname}
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				<a href="{:U('Member/edit',array('id'=>$order[0][member_id]))}">[显示团长信息]</a>
+
+			</td>
+			<td>
+				<span class="tdt">
+					开团时间：
+				</span>
+				{$group.create_time|date='Y-m-d H:i:s',###}
+
+			</td>
+		</tr>
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				过期时间：
+			</span>
+				{$group.expire_time|date='Y-m-d H:i:s',###}
+
+			</td>
+			<td>
+				<span class="tdt">
+					成功时间：
+				</span>
+				{$group.success_time|default='--'|date='Y-m-d H:i:s',###}
+
+
+			</td>
+		</tr>
+
+
+
+		<tr class="ttr ct">
+			<td>
+			<span class="tdt">
+				需要人数：
+			</span>
+				{$group.require_num} 人
+			</td>
+			<td>
+				<span class="tdt">
+					当前人数：
+				</span>
+
+				{$group.people} 人
+				
+				
+
+			</td>
+		</tr>
+
+
+		
+	    
+		
+		</table>
+		<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+			<tr class="tr ct">
+				<td colspan="3">
+					
+					商品信息
+				</td>
+			</tr>
+			<tr class="ttr">
+				<td width="70"></td>
+				<td>
+					商品名称
+				</td>
+				<td width="70">
+					商品价格
+				</td>
+				
+			</tr>
+			<tr class="ttr">
+				<td>
+					<img src="{$goods['image_url']}" alt="" width="76px;" height="76px;" />
+				</td>
+				<td>
+					<a href="javascript:details_group({$group.group_order_id},'获取拼团码')">{$goods['goods_name']}</a>
+				</td>
+				<td>
+					
+						{$goods['group_price']}元
+					  
+					
+				</td>
+				
+			</tr>
+
+		</table>
+
+
+		<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+			<tr class="tr ct">
+				<td colspan="5">
+					
+					参团信息
+				</td>
+			</tr>
+			<tr class="ttr">
+				<td width="70">会员头像</td>
+				<td width="70">
+					会员名称
+				</td>
+				<td width="100">
+					参团时间
+				</td>
+				<td width="100">
+					参团订单
+				</td>
+				<td width="100">
+					订单状态
+				</td>
+				
+			</tr>
+			<volist name="order" id="data">
+			<tr class="ttr">
+				<td>
+					<img src="{$data['headimgurl']}" alt="" width="76px;" height="76px;" />
+				</td>
+				<td>
+					<a href="{:U('Member/edit',array('id'=>$data[member_id]))}"> {$data['nickname']}</a><if condition="$data['group_header'] eq 1 ">(团长)
+ </if>
+				</td>
+				<td>
+					{$data['pay_time']|date='Y-m-d H:i:s',###}
+				</td>
+				<td>
+					<a href="{:U('Orders/edit',array('id'=>$data[order_id]))}">{$data.order_sn}</a>
+				</td>
+				<td>
+					
+						<switch name="data.order_status">
+					    <case value="0">待支付</case>
+					    <case value="1">已支付，未确认</case>
+					    <case value="2">已确认，待发货</case>
+					    <case value="3">配送中</case>
+					    <case value="4">已签收</case>
+					    <case value="5">交易已取消</case>
+					    <case value="6">未发货退款处理中</case>
+					    <case value="7">未发货退款成功</case>
+					    <case value="8">已发货退款处理中</case>
+					    <case value="9">已发货退款成功</case>
+					    
+					    <default />default
+					 </switch>
+					  
+					
+				</td>
+				
+			</tr>
+			</volist>
+
+		</table>
+
+
+		
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+<script>
+	//发货
+	function sendOrder(id){
+		window.top.art.dialog.open('{:U('Orders/delivery/')}'+'&order_id='+id,{title: '设置发货', width: 600, height: 500});
+	}
+
+	//查看商品
+	function details_group(id, name) {
+		window.top.art.dialog.open('{:U('Group/get/')}'+'&id='+id,{title: name, width: 430, height: 430});
+	}
+
+</script>
+</body>
+	</html>

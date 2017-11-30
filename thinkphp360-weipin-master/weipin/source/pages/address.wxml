@@ -1,0 +1,150 @@
+<view class="body" hidden="{{!page.load && !page.operate}}">
+	<view class="div mod_container">
+		<view class="div wx_bar">
+            <view class="div wx_bar_back">
+                <navigator id="back" url="javascript:void(0);"></navigator>
+            </view>
+            <view class="div wx_bar_tit">收货地址</view>
+        </view>
+		<form bindsubmit="listenFormSubmit" bindreser="listenFormReser" report-submit="true">
+		<view class=" div wx_wrap">
+			<view class="address_new">
+				<view class="p">
+                    <label for="name"><view class="span tit">收货人</view>
+                        <input id="name" name="receive_name" value="{{address.receive_name}}" placeholder="名字" type="text" bindblur='receive_function'/>
+                        <view class="span" id="updateTip1" style="color: #F43530; {{!receive_name_tip ? 'display: none;' : ''}}">请填写姓名</view>
+                    </label>
+                </view>
+				
+				<view class="p">
+                    <label for="mobile"><view class="span tit">手机号码</view>
+                        <input id="mobile" name="mobile" value="{{address.mobile}}" placeholder="手机号码" type="number" bindblur='mobile_function'/>
+                        <view class="span" id="updateTip2" style="color: #F43530; {{!mobile_tip ? 'display: none;' : ''}}">请填写正确的手机号</view>
+                    </label>
+                </view>
+				
+                <view class="p">
+                    <label for="mobile"><view class="span tit">选择地区</view>
+                        <view class="input" id="address_text" name="address_text" bindtap="address_select" style="border:1px solid #ddd;font-size:14px;height:35px;width:100%;display:block;text-overflow:clip;overflow:hidden;white-space:nowrap;font-family:UICTFontTextStyleBody;min-height:1.4rem;line-height:35px;">
+                            <block wx:if="{{provinceValue}}"> {{provinceValue}} </block>
+                            <block wx:else>地区信息</block> 
+
+                            <block wx:if="{{cityValue}}"> {{cityValue}} </block>
+                            <!--<block wx:else> 请选择市 </block> -->
+
+                            <block wx:if="{{areaValue}}"> {{areaValue}} </block>
+                            <!--<block wx:else> 请选择区 </block> -->
+                        </view>
+                        <!--<input id="address_text" name="address_text" value="{{provinceValue}} {{cityValue}} {{areaValue}}" type="text" bindtap="address_select" />-->
+                        <input disabled="true" name="province" value="{{provinceIndex}}" class="hide"/>
+                        <input disabled="true" name="city" value="{{cityIndex}}" class="hide"/>
+                        <input disabled="true" name="district" value="{{areaIndex}}" class="hide"/>
+                        <view class="span" id="updateTip2" style="color: #F43530;  {{!province_tip ? 'display: none;' : ''}}">请填写正确的省</view>
+                        <view class="span" id="updateTip2" style="color: #F43530;  {{!city_tip ? 'display: none;' : ''}}">请填写正确的市</view>
+                        <view class="span" id="updateTip2" style="color: #F43530;  {{!district_tip ? 'display: none;' : ''}}">请填写正确的区</view>
+                    </label>
+                </view>
+                
+
+                <view class="p" id="adType">
+                    <view class="label" for="adType"><view class="span tit">地址类别</view>
+                        <picker bindchange="adTypesChange" value="{{adTypeIndex}}" range="{{adTypes}}">
+                            <view class="picker">
+                                {{adTypes[adTypeIndex]}}
+                                <input disabled="true" name="address_name" value="{{address_name[adTypeIndex]}}" class="hide"/>
+                            </view>
+                        </picker>
+                        <view class="span" id="updateTip7" style="color: #F43530; {{!adType_tip ? 'display: none;' : ''}}">请选择家庭/公司</view>
+                    </view>
+                </view>
+
+
+
+                <view class="p">
+                    <view class="label" for="adinfo"><view class="span tit">详细地址</view>
+                        <input id="adinfo" name="address" value="{{address.address}}" placeholder="详细地址" type="text" bindblur='adinfo_function'/>
+                        <view classs="span" id="updateTip6" style="color: #F43530; {{!adinfo_tip ? 'display: none;' : ''}}">请填写详细地址</view>
+                    </view>
+                </view>
+
+
+                <view class="p action">
+                    <button class="submit" id="add" formType="submit">确认</button>
+                    <block wx:if="{{address.address_id}}">  
+                        <button class="submit hidden" style="background-color: #F43530;" id="deletes" bindtap="deletes" data-address_id="{{address.address_id}}">删除</button>
+                    </block>
+                </view>
+
+
+                <!--<view animation="{{animationData}}" style="background:red;height:100rpx;width:100rpx" bindtap="test"></view>-->
+
+                 <view class="address_select" style="{{address_select ? '' : 'display:none;'}}">
+                    <view class="area_ctrl slideInUp">
+                        <view class="div area_btn_box">
+                            <view class="div area_btn larea_cancel" bindtap="close" style="visibility:hidden;">取消</view>
+                            <view class="div area_btn larea_finish" bindtap="finish">完成
+                            </view>
+                        </view>
+
+                        <view class="area_roll_mask">
+                            <view class="area_roll">
+                                  <view class="selectItem">
+                                    <view class="gear provinces" data-class="gear" data-top="{{provinceTop}}" data-len="{{provinces.length}}" data-val="{{provinceVal}}" animation="{{animationProvinces}}" data-type="provinces" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend">
+                                        <view wx:key="item" wx:for="{{provinces}}">
+                                            <view class="tooth" data-id="{{item.region_id}}" data-left="{{index-1}}" data-right="{{index+1}}" >{{item.region_name}}</view>
+                                            <!--bindtap='provinces'-->
+                                        </view>
+                                    </view>
+                                    <view class="div area_grid"></view>
+                                </view>
+
+                                        
+                                <view class="selectItem ">
+                                    <view class="gear citys" animation="{{animationCitys}}"  data-top="{{cityTop}}" data-len="{{citys.length}}" data-val="{{cityVal}}" data-class="gear" data-type="citys" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend">
+                                        <view wx:key="item" wx:for="{{citys}}">
+                                            <!--data-left="{{index-1}}" data-right="{{index+1}}"  bindtap='citys'-->
+                                            <view class="tooth" data-id="{{item.region_id}}">{{item.region_name}}</view>
+                                        </view>    
+                                    </view>
+                                    <view class="div area_grid"></view>
+                                </view>
+
+                                <view class="selectItem">
+                                    <view class="gear areas " animation="{{animationAreas}}"   data-top="{{areaTop}}" data-len="{{areas.length}}" data-val="{{areaVal}}" data-class="gear" data-type="areas" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend" >
+                                        <view wx:key="item" wx:for="{{areas}}">
+                                        <!-- data-left="{{index-1}}" data-right="{{index+1}}" bindtap='areas'-->
+                                            <view class="tooth" data-id="{{item.region_id}}">{{item.region_name}}</view>
+                                        </view>    
+                                    </view>
+                                    <view class="div area_grid"></view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <!--<view class="p">
+                    <label for="provinceId"><span class="tit">省份</span>
+                    <picker bindchange="bindProvinceIdChange" value="{{provincesId}}" range="{{provinces.values}}" bindtap="loadProvince" data-provinceId="0">
+                        <view class="picker">
+                            {{provinces.values[provincesId]}}
+                        </view>
+                    </picker>
+                    </label>
+                </view>
+
+                <view class="p">
+                    <label for="cityId"><span class="tit">市</span>
+                         <picker bindchange="bindCityIdChange" value="{{cityId}}" range="{{citys.values}}" bindtap="loadCity" data-provinceId="0">
+                            <view class="picker">
+                                {{citys.values[citysId]}}
+                            </view>
+						</picker>
+                    </label>
+                </view>-->
+			</view>
+		</view>
+        </form>
+	</view>
+</view>
+
+<include src="common/footer.wxml"/>

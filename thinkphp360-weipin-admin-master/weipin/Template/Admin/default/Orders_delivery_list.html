@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/vendor/datepicker/WdatePicker.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="4" class="table_title">
+				<span class="fl">等待发货列表</span>
+				<span class="fr">
+					<!--<a href="{:U('Goods/add')}">添加物品</a>-->
+				</span>
+
+			</td>
+			</tr>
+			
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td >订单编号</td>
+				<td >物流名称</td>
+				<td >物流单号</td>
+				
+			</tr>
+		<form action="{:U('Orders/delivery_submit')}" method="post">
+	    <volist name="lists" id="vo" key="i">
+			<tr class='tr ct'>
+				<td align='center'>{$vo.order_id}</td>
+				<td >{$vo.order_sn}</td>
+				<td >{$vo.shipping.shipping_name}</td>
+				<td >{$vo.tracking_number}</td>
+				<input type="hidden" name="order[]" value="{$vo.order_id}|{$vo.shipping.shipping_name}|{$vo.shipping.shipping_code}|{$vo.tracking_number}" />
+
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="4" class="pages">
+            <input type="submit"  value="确认发货" />
+          </td>
+        </tr>
+        </form>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+<script>
+	$('#export').click(function(){
+		location.href = '?' + $('#searchForm').serialize() + '&export=1';
+
+	});
+</script>
+</body>
+	</html>

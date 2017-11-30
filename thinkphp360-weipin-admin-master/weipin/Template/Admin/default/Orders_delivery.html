@@ -1,0 +1,39 @@
+<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+<form action="" method="post">
+<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+			<tr class="tr ct">
+				<td colspan="2">
+					
+					发货设置
+				</td>
+			</tr>
+			<tr class="tr">
+				<td>物流方式</td>
+				<td>
+					<select name="shipping_id" id="">
+						<volist name="shipping" id="vo">
+							<option value="{$vo.shipping_id}">{$vo.shipping_name}</option>
+						</volist>
+					</select>
+				</td>
+			</tr>
+
+			<tr class="tr">
+				<td>物流单号</td>
+				<td>
+					<input type="text" name="tracking_number" size="60">
+				</td>
+			</tr>
+
+			<tr class="tr ct">
+				
+				<td colspan="2">
+					<input type="submit" value="发货">
+				</td>
+			</tr>
+			
+			
+			
+
+		</table>
+</form>

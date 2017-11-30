@@ -1,0 +1,83 @@
+<view class="container">
+<!--hidden="{{!page.load && !page.operate}}"-->
+    <view class="main-view">
+        <view class="my">
+            <view class="my_head ">
+                <view class="my_head_pic">
+                    <image id="uinLogo" class="my_head_img img" src="{{userInfo.avatarUrl}}"></image>
+                </view>
+				
+				<view class="my_head_info">
+					<view class="h4 my_head_name" id='nickname'>{{userInfo.nickName}}</view>
+				</view>
+			</view>
+        </view>
+		
+		<!-- start -->
+		<view class="div">
+			<view class="div nav">
+				<view class="ul nav_list">
+					<view class="li nav_item nav_order" ptag="12478.1.1">
+						<view bindtap="toOrder" data-type="3" class="a" ptag="12478.16.1">
+							<view class="a" ptag="12478.1.1" href="orders.html">
+								<view class="div nav_item_hd">我的订单</view>
+							</view>
+						</view>
+						<view class="div nav_item_bd">
+							<view bindtap="toOrder" class="a" ptag="12478.16.1"  data-type="3"  ><view  class="span nav_item_txt" >全部</view></view>
+							
+							<view class=" a" ptag="12478.17.1" data-type="0" bindtap="toOrder">
+								<view class="span nav_item_txt">待付款<view class="i nav_item_num" id="need_pay_count" style="{{!unpaid || unpaid == 0 || unpaid == undefined? 'display:none' : ''}}">{{unpaid}}</view></view>
+							</view>
+							
+							<view class="a" ptag="12478.18.1" data-type="1" bindtap="toOrder">
+								<view class="span nav_item_txt">待收货<view class="nav_item_num" id="need_recv_count" style="{{!unreceived || unreceived == 0 || unreceived == undefined ? 'display:none' : ''}}">{{unreceived}}</view></view>
+							</view>
+						</view>
+					</view>
+					<view class="li nav_item nav_cheap">
+						<view class="div nav_item_hd"><view class="a" bindtap="toGroup" data-url="groups"  href="groups.html"  open-type="switchTab"> 我的拼团 </view></view>
+					</view>
+					<view class="li nav_item nav_cart" ptag="12478.10.1">
+						<view class="div nav_item_hd"><navigator url="addresses" class="a" href="addresses.html" >我的地址 </navigator></view>
+					</view>
+					<!--<view class="li nav_item nav_cart" ptag="12478.10.1">
+						<view class="div nav_item_hd_coupons"><view class="coupons_a a" href="coupons.html" >我的优惠券 </view></view>
+					</view>-->
+					
+					<view class="li nav_item nav_cart" ptag="12478.10.1" plain="true" >
+						<view type="primary" class="post_sale div nav_item_hd_coupons_sale" open-type="contact">
+							<view class="coupons_a div" href="post_sale.html" >售后服务 </view>
+							<button type="default-light" size="30" style="display:block;line-height:4;z-index:9999999999;width:369px;height:40px;margin-left:6px;background-color:red;margin-top:-43px;opacity:-0.5;" open-type="contact"> </button>  
+						</view>
+					</view>
+					
+					
+					<!--<view class="li nav_item nav_cart" ptag="12478.10.1">
+						<view class="div nav_item_hd_promotion"><view class="a" href="#" >降价提醒</view>
+							<view class="span rf">
+								<view class="div onoffswitch">
+									<switch bindchange="switch2Change"/>
+								</view>
+							</view>
+						</view>
+					</view>
+					-->
+					<!--<view class="li nav_item nav-marging-vertical">
+						<view class="div nav_item_refresh" bindtap="refreshLogin"><view>授权头像</view></view>
+					</view>
+					-->
+
+					<!--<view class="li nav_item nav-marging-vertical">
+						<view class="div nav_item_refresh" bindtap="clearCache"><view>清除缓存</view></view>
+					</view>-->
+				</view>
+			</view>
+		</view>	
+		<!-- end -->
+    </view>
+</view>
+<!--<view class="div" style="font-size:13px;color:gray;vertical-align:middle;text-align:center;line-height:23px;}">点击右上角，显示在聊天顶部</view>
+<view class="div" style="font-size:13px;color:gray;vertical-align:middle;text-align:center;line-height:23px;}">再次使用： 发现-小程序-搜索“拼123”</view>
+<view class="div"  style="font-weight:bold;font-size:13px;color:#666;vertical-align:middle;text-align:center;line-height:30px;}">查看这张名片二维码，同步至手机</view>-->
+<include src="common/footer.wxml"/>

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="4" class="table_title">
+				<span class="fl">配送方式</span>
+				<span class="fr">
+					<a href="{:U('Shipping/add')}">添加配送方式</a>
+				</span>
+			</td>
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td >物流名称</td>
+				<td >物流代码</td>
+				<td width="100">管理操作</td>
+			</tr>
+	    <volist name="list" id="vo">
+			<tr class='tr'>
+				<td align='center'>{$vo.shipping_id}</td>
+				<td >{$vo.shipping_name}</td>
+				<td >{$vo.shipping_code}</td>
+				
+				
+				<td align='center'>
+					<a href="{:U('Shipping/edit/',array('id'=>$vo['shipping_id']))}">修改</a>
+					|<a href="javascript:void(0)" onclick="return confirmurl('{:U('Shipping/del/',array('id'=>$vo['shipping_id']))}','确定删除该信息吗？')">删除</a>
+				</td>
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="9" class="pages">
+            {$page}
+          </td>
+        </tr>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+</body>
+	</html>

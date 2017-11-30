@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>后台用户管理-{$Think.config.cms_name}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel='stylesheet' type='text/css' href='__PUBLIC__/Admin/css/admin_style.css' />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/function.js"></script>
+	<script charset="utf-8" src="__PUBLIC__/vendor/datepicker/WdatePicker.js"></script>
+	<style>td{ height:22px; line-height:22px}</style>
+</head>
+<body>
+	<table width="98%" border="0" cellpadding="9" cellspacing="1" class="table">
+		<tr>
+			<td colspan="11" class="table_title">
+				<span class="fl">团管理</span>
+				<span class="fr">
+					<!--<a href="{:U('Goods/add')}">添加物品</a>-->
+				</span>
+
+			</td>
+			</tr>
+
+		<tr>
+			<td colspan="11" class="table_title" >
+				<form name="searchForm" id="searchForm" action="">
+					<input type="hidden" name="g" value="Admin" />
+					<input type="hidden" name="m" value="Group" />
+					<input type="hidden" name="a" value="index" />
+					团购状态
+					<select name="search[status]" id="status">
+						<option value="-1" <eq name="_GET.search.status" value="-1">selected</eq>>全部</option>
+						<option value="0" <eq name="_GET.search.status" value="0">selected</eq>>团购进行中</option>
+						<option value="1" <eq name="_GET.search.status" value="1">selected</eq>>团购成功</option>
+						<option value="2" <eq name="_GET.search.status" value="2">selected</eq>>团购失败</option>
+					</select>
+
+
+					开团时间
+					<input id="start_time" name="search[start_time]" type="text" onClick="WdatePicker({dateFmt:'yyyy-M-d HH:mm'})" value="{$_GET['search']['start_time']}" />~
+					<input id="end_time" name="search[end_time]" type="text" onClick="WdatePicker({dateFmt:'yyyy-M-d HH:mm'})" value="{$_GET['search']['end_time']}" />
+					</br>
+					<input type="submit" value=" 搜索 " class="button" />
+				</form>
+			</td>
+		</tr>
+
+			<tr class="list_head ct">
+				<td width="70">ID</td>
+				<td width="70">需要人数</td>
+				<td width="70">当前人数</td>
+				<td width="100">团长</td>
+				<td >创建时间</td>
+				<td >过期时间</td>
+				<td >成功时间</td>
+				<td width="70">状态</td>
+				<td >管理操作</td>
+			</tr>
+	    <volist name="list" id="vo">
+			<tr class='tr'>
+				<td align='center'>{$vo.group_order_id}</td>
+				<td >{$vo.require_num}人</td>
+				<td >{$vo.people}人</td>
+				<td >{$vo.nickname}</td>
+				<td align='center'>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+				<td align='center'>{$vo.expire_time|date='Y-m-d H:i:s',###}</td>
+				<td align='center'>
+					{$vo.success_time|default='--'|date='Y-m-d H:i:s',###}
+				</td>
+				<td align='center'>
+					
+					<switch name="vo.status" >
+					 <case value="0">团购进行中</case>
+					 <case value="1"><span style="color:red;">团购成功</span></case>
+					 <case value="2"><span style="color:blue;">团购失败</span></case>
+					 <default />未知
+					 </switch>
+
+				</td>
+
+				
+				
+				<td align='center'>
+					<a href="{:U('Group/edit/',array('id'=>$vo['group_order_id']))}">查看</a>
+					<!--|<a href="javascript:void(0)" onclick="return confirmurl('{:U('Goods/del/',array('id'=>$vo['goods_id']))}','确定删除该商品吗？')">删除</a>-->
+				</td>
+			</tr>
+	    </volist>
+		<tr class="tr">
+          <td colspan="11" class="pages">
+            {$page}
+          </td>
+        </tr>
+		</table>
+		<script>var version='{$Think.config.cms_var}';</script>
+		<include file="Index:footer" />
+</body>
+	</html>

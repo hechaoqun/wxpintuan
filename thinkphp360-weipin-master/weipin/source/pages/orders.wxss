@@ -1,0 +1,295 @@
+.nav_fixed {
+    position: fixed;
+    background-color: #fff;
+    height: 40px;
+    width: 100%;
+    font-size: 15px;
+    text-align: center;
+    z-index: 9999;
+    top: 0;
+    max-width: 640px;
+}
+.nav_txt {
+    position: relative;
+}
+
+.nav_cur {
+    border-bottom: 2px solid #e02e24;
+    color: #e02e24;
+}
+
+.fixed_nav_item {
+    height: 40px;
+    line-height: 40px;
+    width: 33.33%;
+    float: left;
+    display: block;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+#dealliststatus1 {
+    font-size: 12px;
+    padding-top: 42px;
+}
+
+.order {
+    background-color: #fff;
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #dedede;
+}
+
+.order {
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+.order_hd {
+    background-color: #fafafb;
+    border-bottom: 1px solid #d5d5d5;
+    border-top: 1px solid #e4e4e4;
+    height: 39px;
+    line-height: 39px;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.order_bd {
+    padding: 0 10px;
+}
+
+.order_bd {
+    background-color: #fff;
+    border-bottom: 1px solid #dedede;
+    padding: 0 10px;
+}
+
+.order_goods {
+    position: relative;
+    padding: 15px 0;
+    padding-left: 75px;
+    font-size: 12px;
+    border-bottom: 1px solid #d7d7d7;
+    min-height: 60px;
+}
+.order_goods_img {
+    position: absolute;
+    top: 15px;
+    left: 0;
+}
+
+.order_goods_img .img {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #d7d7d7;
+}
+
+.order_goods_info {
+    position: relative;
+}
+
+.order_goods_name {
+    max-height: 30px;
+    color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 5px;
+    line-height: 15px;
+    white-space: nowrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.order_goods_attr {
+    color: #666;
+}
+
+.order_goods_attr_item {
+    line-height: 22px;
+    height: 24px;
+}
+
+.order_goods_price {
+    float: right;
+}
+
+.order_goods_price {
+    float: right;
+    font-size: px;
+    height: 22px;
+    line-height: 22px;
+    text-decoration:line-through;
+}
+
+.order_goods_attr_item {
+    line-height: 22px;
+    overflow: hidden;
+    height: 24px;
+}
+
+.order_goods_attr_item:after {
+    clear: both;
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.order_ft {
+    padding: 10px;
+}
+
+.order_total {
+    font-size: 12px;
+    height: 16px;
+    line-height: 16px;
+    overflow: hidden;
+    color: #5a5a5a;
+        text-align: right;
+            margin-bottom: 10px;
+}
+
+.order_total_info {
+    float: left;
+}
+
+.order_price {
+    float: right;
+}
+
+.order_price .b {
+    color: #e02e24;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.small {
+    font-size: 80%;
+}
+
+.order_total:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+
+.order_opt {
+    padding: 10px 0 0;
+}
+
+.order_status {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    color: #e02e24;
+}
+
+.order_btn {
+    float: right;
+}
+
+.order_btn .a {
+    float: left;
+    width: 80px;
+    height: 30px;
+    background-color: #4b4b4b;
+    line-height: 30px;
+    border-radius: 3px;
+    color: #fff;
+    margin-left: 5px;
+    text-align: center;
+}
+
+.order_opt:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+
+.nav_cur {
+    border-bottom: 2px solid #e02e24;
+    color: #e02e24;
+}
+
+.p {
+    display: inline;
+}
+
+.body {
+    margin:0 auto;
+    min-width:320px;
+    max-width:640px;
+    height:100%;
+    background:#fff;
+    font-size:12px;
+    font-family:Helvetica,STHeiti STXihei,Microsoft JhengHei,Microsoft YaHei,Arial;
+    line-height:1.5;
+    color:#666;
+    -webkit-text-size-adjust:100%!important;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    background-color:#f1f1f2;
+}
+
+page {
+    background-color:#eceded;
+}
+
+.order_btn .order_btn_buy, .order_btn .order_btn_receive{
+    background-color:#e02e24;
+}
+
+
+.body {
+    overflow: auto;height: 100%;
+}
+
+
+.center, .no-orders-at-all {
+    position: relative;
+}
+
+.no-orders-at-all .head-block {
+    height: 38.1px;
+    text-align: center;
+    padding-top: 108px;
+}
+
+.no-orders-at-all .head-block .blank-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 37px;
+    background-position: 0 -80px;
+}
+
+.blank-icon, .hot-icon {
+    background-size: 196px 190px;
+}
+
+.blank-icon, .coupon-icon, .hot-icon {
+    background-image: url(http://cdn.yangkeduo.com/assets/img/orders_sprites_v2-0d494f291a.png);
+    background-repeat: no-repeat;
+    background-size: 196px 196px;
+}
+
+.no-orders-at-all .head-block .hint {
+    font-size: 17px;
+    color: #151516;
+    margin-bottom: 14px;
+}
+
+.no-orders-at-all .head-block .recommend-hint {
+    font-size: 12px;
+    color: #9c9c9c;
+}
