@@ -140,7 +140,7 @@ Page({
                 // });
                 //微信支付
                 self.order_id = data.order_id;
-                // util.wxpay(self);
+                util.paySuccessRedirect(self.order_id);
                 self.setData({"order_id" : self.order_id});
                 //self.wxpay();
             } else if(data['result'] == "fail") {
