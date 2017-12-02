@@ -216,11 +216,12 @@ class WeuserAction extends ApiAction {
             $input['group_buy'] = $data['groupbuy'];
             
             if($input['group_buy'] == 1) {
-                $groupBuyCount = $OrdersDb->where(array('buyer_id'=>$this->memberInfo['member_id'],'group_buy'=>1,'order_status'=>array('not in',array(1,5))))->count();
+                $groupBuyCount = $OrdersDb->where(array('buyer_id'=>$this->memberInfo['member_id'],'group_buy'=>1,'goods_id' => $data['goods_id'],'order_status'=>array('not in',array(1,5))))->count();
                 if($groupBuyCount >= $goodsInfo['limit_buy'] && $goodsInfo['limit_buy'] != 0){
                     echo json_encode(array('result'=>'fail','error_code'=>41002,'error_info'=>'该商品一人限购'.$goodsInfo['limit_buy'].'件'));
                     return;
                 }
+
             }
             
             if($input['group_buy'] == 1 && $input['group_order_id'] == 0){
@@ -285,13 +286,59 @@ class WeuserAction extends ApiAction {
             }
             $input['shipping_address'] = $address['full_address'];
             $input['shipping_amount'] = 0.00;
-            $input['order_status'] = 0;
+            $input['order_status'] = 1;
             
             $input['order_time'] = time();
-            $order_id = $OrdersDb->add($input);
             
+
+
+            $GroupDb = D('Group');
+            if($input['group_order_id'] > 0){
+                $groupInfo = $GroupDb->getGroup(array('group_order_id'=>$input['group_order_id']));
+
+                if(!$groupInfo){
+                    $msg = "订单不存在";
+                    log::record('call back: 订单'.$data['out_trade_no'].'中团'.$input['group_order_id'].'不存在,加入团失败',log::WARN);
+                    return true;
+                }
+            }
+
+            $input['pay_time'] = time();
+            $input['order_status'] = 2;
+            if($input['group_buy'] == 1){
+
+                //是团购
+                if($input['group_order_id'] == 0){
+                    //新开团
+                    $group['require_num'] = $goodsInfo['group_number'];
+                    $group['people'] = 1;
+                    $group['status'] = 0;
+                    $group['create_time'] = time();
+                    $group['expire_time'] = time()+3600* C('group.expire_time');
+                    $group['owner_id'] = $input['buyer_id'];
+                    $group_id = $GroupDb->add($group);
+                    $input['group_order_id'] = $group_id;
+                }else{
+                    //加入团
+                    $groupData['people'] = $input['people'] + 1;
+
+                    if($groupData['people'] == $input['require_num'] ){
+                        $groupData['status'] = 1;
+                        $groupData['success_time'] = time();
+                    }
+                    $GroupDb->where(array('group_order_id'=>$input['group_order_id']))->save($groupData);
+                }
+
+            }
+
+            $order_id = $OrdersDb->add($input);
+
+            $GoodsDb->where(array('goods_id'=>$goodsInfo['goods_id']))->setDec('goods_stock');
+            $GoodsDb->where(array('goods_id'=>$goodsInfo['goods_id']))->setInc('sell_count');
+
+
             if($order_id){
-                echo json_encode(array('result'=>'ok','order_id'=>$order_id));
+                echo json_encode(array('result'=>'ok','order_id'=>$order_id,'goodsInfo'=>$goodsInfo,'input'=>$input));
                 return;
             }else{
                 echo json_encode(array('result'=>'fail','error_code'=>41002,'error_info'=>'创建订单失败'));
@@ -565,8 +612,8 @@ class WeuserAction extends ApiAction {
         $map['buyer_id'] = $this->memberInfo['member_id'];
         $map[C('db_prefix') . 'orders.group_order_id'] = array('gt',0);
         $map['group_buy'] = 1;
-        $map['pay_sn'] = array('neq','');
-        $map['pay_time'] = array('gt',0);
+        // $map['pay_sn'] = array('neq','');
+        // $map['pay_time'] = array('gt',0);
         $map['order_status'] = array(array('neq',0,array('neq',5),'AND'));
         
         $orders = $OrdersDb->join((C('db_prefix') . 'group ON ' . C('db_prefix') . 'orders.group_order_id = ' . C('db_prefix') . 'group.group_order_id'))->where($map)->limit($offset,$size)->order(C('db_prefix') . 'group.group_order_id desc')->select();
@@ -577,6 +624,7 @@ class WeuserAction extends ApiAction {
             $orders[$k]['order_goods'] = unserialize($v['order_goods']);
         }
         $ret['group_orders'] = $orders;
+        $ret['map'] = $map;
         $ret['result'] = 'ok';
         echo json_encode($ret);
     }

@@ -17,6 +17,7 @@ Page({
     this.address_id = options.address_id;
 
     //团购订单
+    console.log(options)
     if(options.group_order_id != undefined) {
       this.group_order_id = options.group_order_id;
     }
@@ -139,7 +140,7 @@ Page({
                 // });
                 //微信支付
                 self.order_id = data.order_id;
-                util.wxpay(self);
+                // util.wxpay(self);
                 self.setData({"order_id" : self.order_id});
                 //self.wxpay();
             } else if(data['result'] == "fail") {

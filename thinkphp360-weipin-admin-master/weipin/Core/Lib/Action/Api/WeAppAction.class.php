@@ -12,6 +12,7 @@
  * 时间:上午9:30:36
  * ----------------------------------------------------------------------------
  */
+
 class WeAppAction extends ApiAction {
     public $weChat;
     public function _initialize() {

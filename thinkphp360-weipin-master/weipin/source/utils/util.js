@@ -273,6 +273,7 @@ function wxpay(self) {
                      }
                   }
                 })
+                
             } else if(data['result'] == "fail") {
                data.url  = 'orders';
                self.error(data);
