@@ -67,12 +67,12 @@
                     <block wx:if="{{sell_type == 1}}">{{goods.group_price}}</block>
                     <block wx:else>{{goods.alone_price}}</block></view></view>
                 <view class="pay2 div ">
-                    <view class="div pay2_hd">请选择支付方式</view>
+                    <view class="div pay2_hd">请选择提交方式</view>
                     <view id="payList" class="div pay2_list">
                         <view id="goTenPay" class="div pay2_item pay2_wx pay2_selected">
                             <view class="span pay2_item_state"></view>
                             <view class="span pay2_item_ico"></view>
-                            <view class="span pay2_item_tit">微信支付</view>
+                            <view class="span pay2_item_tit">手动提交</view>
                         </view>
                     </view>
                     <!--ms-if-->
@@ -81,9 +81,9 @@
                     <form name="theForm" id="theForm" class="form" report-submit="true" bindsubmit="btnOrderDone">
                         <view>  
                              <button formType="submit" class="pay2_btn" loading="{{btn_order_done ? true : false}}"  id="btn_order_done" style="{{btn_order_done || !address ? 'opacity: 0.4;' : ''}}" >
-                                 <block wx:if="{{btn_order_done}}">正在支付 请稍候</block>
-                                 <block wx:elif="{{cancel_pay}}">继续支付</block>
-                                 <block wx:else>立即支付</block>
+                                 <block wx:if="{{btn_order_done}}">正在提交 请稍候</block>
+                                 <block wx:elif="{{cancel_pay}}">继续提交</block>
+                                 <block wx:else>立即提交</block>
                              </button>
                         </view>
                     </form>
@@ -109,7 +109,7 @@
                 <view class="div step_item step_item_on">
                     <view class="div step_num">2</view>
                     <view class="div step_detail">
-                        <view class="p step_tit">支付开团
+                        <view class="p step_tit">提交开团
                            <view  class="br">或参团</view>
                     </view>
                 </view></view>
@@ -118,7 +118,7 @@
                     <view class="div step_num">3</view>
                     <view class="div step_detail">
                         <view class="p step_tit">邀请好友
-                           <view  class="br">参团支付</view>
+                           <view  class="br">参与开团</view>
                     </view>
                 </view></view>
 

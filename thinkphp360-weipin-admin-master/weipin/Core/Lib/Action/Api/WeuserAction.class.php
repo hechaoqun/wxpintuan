@@ -338,20 +338,21 @@ class WeuserAction extends ApiAction {
 
 
             if($order_id){
-                echo json_encode(array('result'=>'ok','order_id'=>$order_id,'goodsInfo'=>$goodsInfo,'input'=>$input));
-                $userInfo = D('Member')->getMember(array('member_id'=>$orderInfo['buyer_id']));
+                
+                $userInfo = D('Member')->getMember(array('member_id'=>$input['buyer_id']));
                 if(C('weapp_tpl.open') == 1){
                     //发送付款通知
                     $data['first'] = array('value'=>'尊敬的会员，您已成功付款。','color'=>'#000');
-                    $data['keyword1'] = array('value'=>$orderInfo['order_sn'],'color'=>'#000');
+                    $data['keyword1'] = array('value'=>$input['order_sn'],'color'=>'#000');
                     $data['keyword2'] = array('value'=>$goodsInfo['goods_name'],'color'=>'#000');
-                    $data['keyword3'] = array('value'=>'成功' . "",'color'=>'#000');
-                    $data['keyword4'] = array('value'=>'微信支付','color'=>'#000');
+                    $data['keyword3'] = array('value'=>'成功','color'=>'#000');
+                    $data['keyword4'] = array('value'=>'测试提交','color'=>'#000');
 
-                    $data['keyword5'] = array('value'=>date('Y-m-d H:i:s',$orderInfo['order_time']),'color'=>'#000');
+                    $data['keyword5'] = array('value'=>date('Y-m-d H:i:s',$input['order_time']),'color'=>'#000');
                     $data['remark'] = array('value'=>'感谢您购买！','color'=>'#000');
                     
-                    send_weapp_msg($userInfo['open_id'],C('weapp_tpl.pay_notify_tpl'),'pages/order?id='.$orderInfo['order_id'],$data,'keyword1.DATA');
+                    send_weapp_msg($userInfo['open_id'],C('weapp_tpl.pay_notify_tpl'),'pages/order?id='.$order_id,$data['frome_id'],$data,'keyword1.DATA');
+                    echo json_encode(array('result'=>'ok','order_id'=>$order_id,'goodsInfo'=>$goodsInfo,'input'=>$input,'data'=>$data,'userInfo' => $userInfo));
                 }
                 return;
             }else{

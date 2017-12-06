@@ -111,8 +111,8 @@ Page({
     this.setData({
       "btn_order_done" : true
     });
-
-
+    var fId = e.detail.formId;
+    console.log('frome_id',fId);
     if(this.data.order_id) {
         self.order_id = this.data.order_id;
         return util.wxpay(self);
@@ -125,7 +125,8 @@ Page({
       "goods_id" : this.goods_id,
       "address_id" : this.address_id,
       "groupbuy" : this.sell_type == 1 ? 1 : 0,
-      "group_order_id" : this.group_order_id ? this.group_order_id : 0
+      "group_order_id" : this.group_order_id ? this.group_order_id : 0,
+      'frome_id': fId
     };
 
     util.ajax({
